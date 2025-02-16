@@ -8,8 +8,12 @@ interface HeroProps {
 export default function Hero({ scrollToProjects }: HeroProps) {
   return (
     <>
-      <h1 className="text-4xl font-bold text-white">
-        Hello, I'm a Frontend Developer
+      <h1 className="text-4xl font-bold text-white text-wrap max-w-2xl mx-auto text-center">
+        <span className="inline-block bg-gradient-to-r from-[#63e] via-gray-100 to-[#63e] text-transparent bg-clip-text bg-[length:200%_100%] animate-wave-text">
+          Mattias Ahlström
+        </span>
+        <br />
+        Frontend Developer
       </h1>
       <p className="text-lg text-white mt-4 text-center max-w-2xl">
         I specialize in creating seamless user experiences for web and mobile
