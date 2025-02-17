@@ -1,7 +1,40 @@
+import { useState, useEffect } from "react";
 import { navigation } from "@/app/navigation";
 import Link from "next/link";
 
 const Nav = () => {
+  const [activeSection, setActiveSection] = useState<string>("home");
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY < 100) {
+        setActiveSection("home");
+        return;
+      }
+
+      const sections = navigation.map((item) => item.name.toLowerCase());
+
+      const current = sections.find((section) => {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          const isVisible = rect.top <= 100 && rect.bottom >= 100;
+          return isVisible;
+        }
+        return false;
+      });
+
+      if (current) {
+        setActiveSection(current);
+      }
+    };
+
+    handleScroll();
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
@@ -12,10 +45,14 @@ const Nav = () => {
   return (
     <nav>
       <div className="flex flex-row justify-between gap-10 p-6 mx-auto lg:max-w-screen-2xl">
-        <div id="home">
+        <div
+          id="home"
+          className={`flex items-center gap-2 pb-1 border-b-2 ${
+            activeSection === "home" ? "border-[#63e]" : "border-transparent"
+          }`}
+        >
           <Link
             href="/"
-            className="flex items-center gap-2"
             onClick={() => {
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
@@ -37,7 +74,11 @@ const Nav = () => {
             <Link
               key={item.name}
               href="/"
-              className="text-white"
+              className={`text-white pb-1 border-b-2 ${
+                activeSection === item.name.toLowerCase()
+                  ? "border-[#63e]"
+                  : "border-transparent"
+              }`}
               onClick={(e) => {
                 e.preventDefault();
                 scrollToSection(item.name.toLowerCase());
