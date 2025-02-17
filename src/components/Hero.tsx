@@ -2,10 +2,10 @@ import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 
 interface HeroProps {
-  scrollToProjects: () => void;
+  scrollToAbout: () => void;
 }
 
-export default function Hero({ scrollToProjects }: HeroProps) {
+export default function Hero({ scrollToAbout }: HeroProps) {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <h1 className="text-4xl font-bold text-white text-wrap max-w-2xl mx-auto text-center">
@@ -22,7 +22,7 @@ export default function Hero({ scrollToProjects }: HeroProps) {
       </p>
       <Button
         variant="ghost"
-        onClick={scrollToProjects}
+        onClick={scrollToAbout}
         className="mt-12 hover:bg-transparent flex flex-col items-center justify-center gap-0 h-fit"
       >
         <ChevronDown className="min-h-4 min-w-4 text-white animate-bounce" />
