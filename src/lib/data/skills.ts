@@ -1,4 +1,4 @@
-import ExpoSVG from "@/lib/svg/expo-icon.svg";
+import ExpoSVG from "../../../public/expo-icon.svg";
 
 export interface Skill {
   id: number;
