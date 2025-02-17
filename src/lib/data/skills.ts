@@ -1,10 +1,11 @@
+import { StaticImageData } from "next/image";
 import ExpoSVG from "../../../public/expo-icon.svg";
 
 export interface Skill {
   id: number;
   name: string;
   icon?: string;
-  svg?: any;
+  svg?: StaticImageData;
 }
 
 export const skills: Skill[] = [
