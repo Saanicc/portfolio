@@ -1,7 +1,10 @@
+import ExpoSVG from "@/lib/svg/expo-icon.svg";
+
 export interface Skill {
   id: number;
   name: string;
-  icon: string;
+  icon?: string;
+  svg?: any;
 }
 
 export const skills: Skill[] = [
@@ -38,7 +41,7 @@ export const skills: Skill[] = [
   {
     id: 7,
     name: "Expo",
-    icon: "devicon-expo-original",
+    svg: ExpoSVG,
   },
   {
     id: 8,

@@ -68,14 +68,14 @@ export default {
             "background-position": "0% 0%",
           },
         },
-        scroll: {
-          "0%": { transform: "translateX(0)" },
-          "100%": { transform: "translateX(calc(-150px * 5))" },
+        "infinite-scroll": {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-100%)" },
         },
       },
       animation: {
         "wave-text": "wave-text 10s ease infinite",
-        scroll: "scroll 20s linear infinite",
+        "infinite-scroll": "infinite-scroll 25s linear infinite",
       },
     },
   },
