@@ -39,7 +39,7 @@ const Contact: React.FC = () => {
       id="contact"
       className="min-h-screen flex flex-col items-center justify-center w-[90%] sm:w-2/3 md:w-3/4 lg:w-1/2"
     >
-      <h2 className="text-3xl font-bold text-white mb-12">Contact me</h2>
+      <h2 className="text-3xl font-bold text-white mb-12">Get in touch</h2>
       <div className="max-w-6xl w-full">
         <div className="w-full backdrop-blur-md bg-white/10 p-8 rounded-lg border border-white/20 shadow-xl">
           <Form {...form}>
