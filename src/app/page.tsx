@@ -3,6 +3,7 @@
 import Nav from "@/components/Nav";
 import Projects from "@/components/Projects";
 import Hero from "@/components/Hero";
+import Skills from "@/components/Skills";
 
 export default function Home() {
   const scrollToProjects = () => {
@@ -10,13 +11,16 @@ export default function Home() {
   };
 
   return (
-    <div className="h-screen overflow-auto relative">
-      <div className="fixed h-screen inset-0 -z-10 w-full items-center [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
-      <Nav />
-      <main className="flex flex-col items-center justify-center min-h-screen flex-wrap px-24">
+    <>
+      <div className="fixed h-full inset-0 -z-10 w-full items-center [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
+      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/5 border-b border-white/10">
+        <Nav />
+      </header>
+      <main className="flex flex-col items-center px-4 md:px-24 mx-auto lg:max-w-screen-2xl">
         <Hero scrollToProjects={scrollToProjects} />
+        <Projects />
+        <Skills />
       </main>
-      <Projects />
-    </div>
+    </>
   );
 }

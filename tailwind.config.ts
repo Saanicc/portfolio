@@ -3,7 +3,7 @@ import type { Config } from "tailwindcss";
 export default {
   darkMode: ["class"],
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
@@ -68,9 +68,14 @@ export default {
             "background-position": "0% 0%",
           },
         },
+        scroll: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(calc(-150px * 5))" },
+        },
       },
       animation: {
         "wave-text": "wave-text 10s ease infinite",
+        scroll: "scroll 20s linear infinite",
       },
     },
   },
