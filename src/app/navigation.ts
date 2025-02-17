@@ -7,22 +7,22 @@ export type NavItemType = {
 
 export const navigation: NavItemType[] = [
   {
+    name: "About",
+    path: "/about",
+    order: 1,
+    title: "About",
+  },
+  {
     name: "Projects",
     path: "/projects",
-    order: 1,
+    order: 2,
     title: "Projects",
   },
   {
     name: "Skills",
     path: "/skills",
-    order: 2,
-    title: "Skills",
-  },
-  {
-    name: "About",
-    path: "/about",
     order: 3,
-    title: "About",
+    title: "Skills",
   },
   {
     name: "Contact",
