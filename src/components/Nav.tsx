@@ -2,11 +2,25 @@ import { navigation } from "@/app/navigation";
 import Link from "next/link";
 
 const Nav = () => {
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <nav>
       <div className="flex flex-row justify-between gap-10 p-6 mx-auto lg:max-w-screen-2xl">
-        <div>
-          <Link href="/" className="flex items-center gap-2">
+        <div id="home">
+          <Link
+            href="/"
+            className="flex items-center gap-2"
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+            scroll={false}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -20,7 +34,15 @@ const Nav = () => {
         </div>
         <div className="flex flex-row gap-10">
           {navigation.map((item) => (
-            <Link key={item.name} href={item.path} className="text-white">
+            <Link
+              key={item.name}
+              href="/"
+              className="text-white"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection(item.name.toLowerCase());
+              }}
+            >
               {item.name}
             </Link>
           ))}
