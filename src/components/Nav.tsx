@@ -1,4 +1,4 @@
-import { navigation } from "@/pages/navigation";
+import { navigation } from "@/app/navigation";
 import Link from "next/link";
 
 const Nav = () => {
