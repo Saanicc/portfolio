@@ -87,7 +87,11 @@ const Contact: React.FC = () => {
                   <FormItem>
                     <FormLabel className="text-white">Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Your name" {...field} />
+                      <Input
+                        className="border-white/30"
+                        placeholder="Your name"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -101,7 +105,11 @@ const Contact: React.FC = () => {
                   <FormItem>
                     <FormLabel className="text-white">Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="your.email@example.com" {...field} />
+                      <Input
+                        className="border-white/30"
+                        placeholder="your.email@example.com"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -118,7 +126,7 @@ const Contact: React.FC = () => {
                       <Textarea
                         {...field}
                         placeholder="Your message"
-                        className="resize-none min-h-[100px] overflow-hidden h-auto"
+                        className="resize-none min-h-[100px] overflow-hidden h-auto border-white/30"
                         rows={4}
                         onInput={(e) => {
                           const target = e.target as HTMLTextAreaElement;
