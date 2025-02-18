@@ -15,6 +15,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import emailjs from "@emailjs/browser";
 import { useToast } from "@/hooks/use-toast";
+import { Card, CardHeader, CardContent } from "./ui/card";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
@@ -68,13 +69,12 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <section
-      id="contact"
-      className="min-h-screen flex flex-col items-center justify-center w-[90%] sm:w-2/3 md:w-3/4 lg:w-1/2"
-    >
-      <h2 className="text-3xl font-bold text-white mb-12">Get in touch</h2>
-      <div className="max-w-6xl w-full">
-        <div className="w-full backdrop-blur-md bg-white/10 p-8 rounded-lg border border-white/20 shadow-xl">
+    <section id="contact" className="w-full max-w-xl mt-10 px-4 md:px-0">
+      <Card className="flex flex-col w-full p-2 pb-6 bg-black/20 border-white/20 backdrop-blur-sm">
+        <CardHeader>
+          <h2 className="text-2xl font-bold text-white">Get in touch</h2>
+        </CardHeader>
+        <CardContent className="pb-0 text-white">
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -85,7 +85,7 @@ const Contact: React.FC = () => {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel className="text-white">Name</FormLabel>
                     <FormControl>
                       <Input placeholder="Your name" {...field} />
                     </FormControl>
@@ -99,7 +99,7 @@ const Contact: React.FC = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel className="text-white">Email</FormLabel>
                     <FormControl>
                       <Input placeholder="your.email@example.com" {...field} />
                     </FormControl>
@@ -113,7 +113,7 @@ const Contact: React.FC = () => {
                 name="message"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Message</FormLabel>
+                    <FormLabel className="text-white">Message</FormLabel>
                     <FormControl>
                       <Textarea
                         {...field}
@@ -137,8 +137,8 @@ const Contact: React.FC = () => {
               </Button>
             </form>
           </Form>
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </section>
   );
 };

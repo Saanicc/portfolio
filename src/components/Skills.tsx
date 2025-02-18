@@ -3,20 +3,15 @@ import { skills } from "@/lib/data/skills";
 
 export default function Skills() {
   return (
-    <div id="skills" className="w-full py-20 overflow-hidden">
-      <h2 className="text-4xl font-bold text-center mb-12">My skills</h2>
-      <div className="w-full inline-flex flex-nowrap overflow-hidden [mask-image:_linear-gradient(to_right,transparent_0,_black_64px,_black_calc(100%-128px),transparent_100%)] sm:[mask-image:_linear-gradient(to_right,transparent_0,_black_128px,_black_calc(100%-200px),transparent_100%)]">
-        <div className="flex items-center justify-center md:justify-start [&_div]:mx-2 animate-infinite-scroll">
+    <section id="skills" className="w-full">
+      <div className="w-full h-full p-6 bg-black/20 border border-white/20 backdrop-blur-sm rounded-lg">
+        <h2 className="text-2xl font-bold text-white mb-5">My skills</h2>
+        <div className="flex flex-wrap gap-2">
           {skills.map((skill) => (
             <SkillCard key={skill.id} {...skill} />
           ))}
         </div>
-        <div className="flex items-center justify-center md:justify-start [&_div]:mx-2 animate-infinite-scroll">
-          {skills.map((skill) => (
-            <SkillCard key={`${skill.id}-clone`} {...skill} />
-          ))}
-        </div>
       </div>
-    </div>
+    </section>
   );
 }

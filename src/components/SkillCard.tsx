@@ -6,18 +6,16 @@ export default function SkillCard({ id, icon, name, svg }: Skill) {
   return (
     <Card
       key={id}
-      className="flex flex-col items-center justify-between min-w-[150px] py-4 text-white bg-black/20 border-white/20 backdrop-blur-sm"
+      className="flex items-center justify-center gap-2 p-3 text-white bg-black/20 border-white/20 backdrop-blur-sm"
     >
-      <div className="flex h-20 items-center justify-center">
+      <div className="flex h-auto items-center justify-center">
         {icon ? (
-          <i className={`${icon} text-[2.5rem]`}></i>
+          <i className={`${icon} text-[1.25rem]`}></i>
         ) : svg ? (
-          <div className="">
-            <Image src={svg} alt={name} className="w-20 text-[2.5rem]" />
-          </div>
+          <Image src={svg} alt={name} className="w-[3rem] text-[1.25rem]" />
         ) : null}
       </div>
-      <span className="text-md">{name}</span>
+      <span className="text-sm">{name}</span>
     </Card>
   );
 }

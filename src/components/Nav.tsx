@@ -18,8 +18,17 @@ const Nav = () => {
         const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
-          const isVisible = rect.top <= 100 && rect.bottom >= 100;
-          return isVisible;
+          const windowHeight = window.innerHeight;
+
+          if (section === "contact") {
+            return (
+              rect.bottom <= windowHeight && rect.bottom >= windowHeight - 50
+            );
+          } else {
+            const elementCenter = rect.top + rect.height / 2;
+            const viewportCenter = windowHeight / 2;
+            return Math.abs(elementCenter - viewportCenter) <= 100;
+          }
         }
         return false;
       });
@@ -38,7 +47,7 @@ const Nav = () => {
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
+      section.scrollIntoView({ block: "center", behavior: "smooth" });
     }
   };
 

@@ -1,11 +1,8 @@
 const About = () => {
   return (
-    <section
-      id="about"
-      className="w-full py-20 px-4 flex justify-center items-center"
-    >
-      <div className="max-w-4xl mx-auto text-center">
-        <h2 className="text-4xl font-bold text-white mb-8">About Me</h2>
+    <section id="about" className="w-full">
+      <div className="w-full h-full p-6 bg-black/20 border border-white/20 backdrop-blur-sm rounded-lg">
+        <h2 className="text-2xl font-bold text-white mb-5">About Me</h2>
         <div className="text-gray-300 space-y-4">
           <p>
             Hello! I&apos;m Mattias, a passionate developer focused on creating

@@ -13,7 +13,7 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <Card className="w-full min-w-[16rem] h-auto bg-black/20 border-white/20 backdrop-blur-sm flex flex-col">
+    <Card className="w-full min-w-[16rem] h-auto bg-transparent border-white/20 flex flex-col">
       <CardHeader>
         <h3 className="text-xl font-semibold text-white">{project.title}</h3>
       </CardHeader>
