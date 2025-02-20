@@ -6,14 +6,42 @@ import {
 } from "@/components/ui/card";
 import { Project } from "@/lib/data/projects";
 import Link from "next/link";
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
 
 interface ProjectCardProps {
   project: Project;
 }
 
 export default function ProjectCard({ project }: ProjectCardProps) {
+  const id = `project-${project.id}`;
+
+  useGSAP(() => {
+    gsap.fromTo(
+      `#${id}`,
+      {
+        opacity: 0,
+        x: 500,
+      },
+      {
+        opacity: 1,
+        x: 0,
+        duration: 0.75,
+        delay: 0.25 + (project.id - 1) * 0.25,
+        ease: "power1.inOut",
+        scrollTrigger: {
+          trigger: `#${id}`,
+          toggleActions: "play none none none",
+        },
+      }
+    );
+  }, []);
+
   return (
-    <Card className="w-full min-w-[16rem] h-auto bg-transparent border-white/20 flex flex-col">
+    <Card
+      id={id}
+      className="w-full min-w-[16rem] h-auto bg-transparent border-white/20 flex flex-col"
+    >
       <CardHeader>
         <h3 className="text-xl font-semibold text-white">{project.title}</h3>
       </CardHeader>

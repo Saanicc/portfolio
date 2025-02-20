@@ -71,14 +71,9 @@ export default {
             "background-position": "0% 0%",
           },
         },
-        "infinite-scroll": {
-          from: { transform: "translateX(0)" },
-          to: { transform: "translateX(-100%)" },
-        },
       },
       animation: {
         "wave-text": "wave-text 10s ease infinite",
-        "infinite-scroll": "infinite-scroll 25s linear infinite",
       },
     },
   },

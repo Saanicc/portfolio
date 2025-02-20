@@ -69,8 +69,8 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="w-full max-w-xl mt-10 px-4 md:px-0">
-      <Card className="flex flex-col w-full p-2 pb-6 bg-black/20 border-white/20 backdrop-blur-sm">
+    <section id="contact" className="w-full max-w-2xl mt-10">
+      <Card className="flex flex-col w-full pb-6 bg-black/20 border-white/20 backdrop-blur-sm">
         <CardHeader>
           <h2 className="text-2xl font-bold text-white">Get in touch</h2>
         </CardHeader>

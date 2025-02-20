@@ -1,17 +1,20 @@
 import SkillCard from "./SkillCard";
 import { skills } from "@/lib/data/skills";
+import { Card, CardContent, CardHeader } from "./ui/card";
 
 export default function Skills() {
   return (
     <section id="skills" className="w-full">
-      <div className="w-full h-full p-6 bg-black/20 border border-white/20 backdrop-blur-sm rounded-lg">
-        <h2 className="text-2xl font-bold text-white mb-5">My skills</h2>
-        <div className="flex flex-wrap gap-2">
+      <Card className="h-full flex flex-col bg-black/20 border-white/20 backdrop-blur-sm">
+        <CardHeader>
+          <h2 className="text-2xl font-bold text-white">My skills</h2>
+        </CardHeader>
+        <CardContent className="flex flex-wrap gap-2">
           {skills.map((skill) => (
             <SkillCard key={skill.id} {...skill} />
           ))}
-        </div>
-      </div>
+        </CardContent>
+      </Card>
     </section>
   );
 }

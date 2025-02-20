@@ -45,18 +45,40 @@ const Nav = () => {
   }, []);
 
   const scrollToSection = (sectionId: string) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ block: "center", behavior: "smooth" });
+    switch (sectionId) {
+      case "home":
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        break;
+      case "about":
+        document.getElementById("about")?.scrollIntoView({
+          block: "center",
+          behavior: "smooth",
+        });
+        break;
+      case "projects":
+        document.getElementById("projects")?.scrollIntoView({
+          block: "center",
+          behavior: "smooth",
+        });
+        break;
+      case "contact":
+        document.getElementById("contact")?.scrollIntoView({
+          block: "center",
+          behavior: "smooth",
+        });
+        break;
+      default:
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        break;
     }
   };
 
   return (
-    <nav>
-      <div className="flex flex-row justify-between gap-10 p-6 mx-auto lg:max-w-screen-2xl">
+    <div className="fixed w-full flex items-center justify-center z-10">
+      <div className="flex flex-row gap-6 px-4 py-3 items-center justify-center bg-black/20 backdrop-blur-md border-2 border-t-0 border-white/20 rounded-bl-xl rounded-br-xl">
         <div
           id="home"
-          className={`flex items-center gap-2 pb-1 border-b-2 ${
+          className={`flex items-center justify-center pb-1 border-b-2 ${
             activeSection === "home" ? "border-[#63e]" : "border-transparent"
           }`}
         >
@@ -78,10 +100,16 @@ const Nav = () => {
             </svg>
           </Link>
         </div>
-        <div className="flex flex-row gap-10">
-          {navigation.map((item) => (
+        {navigation.map((item) => (
+          <div
+            key={item.name}
+            className={`text-white pb-1 border-b-2 ${
+              activeSection === item.name.toLowerCase()
+                ? "border-[#63e]"
+                : "border-transparent"
+            }`}
+          >
             <Link
-              key={item.name}
               href="/"
               className={`text-white pb-1 border-b-2 ${
                 activeSection === item.name.toLowerCase()
@@ -95,10 +123,10 @@ const Nav = () => {
             >
               {item.name}
             </Link>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
-    </nav>
+    </div>
   );
 };
 

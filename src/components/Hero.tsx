@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { useGSAP } from "@gsap/react";
 import { ChevronDown } from "lucide-react";
 import { gsap } from "gsap";
+import { useEffect, useState } from "react";
 
 interface HeroProps {
   scrollToAbout: () => void;
@@ -9,6 +10,8 @@ interface HeroProps {
 gsap.registerPlugin(useGSAP);
 
 export default function Hero({ scrollToAbout }: HeroProps) {
+  const [isVisible, setIsVisible] = useState(true);
+
   useGSAP(() => {
     gsap.fromTo(
       ".header",
@@ -23,7 +26,7 @@ export default function Hero({ scrollToAbout }: HeroProps) {
     );
 
     gsap.fromTo(
-      ".chevron",
+      "#chevron",
       { opacity: 0, y: 50 },
       {
         opacity: 1,
@@ -35,8 +38,37 @@ export default function Hero({ scrollToAbout }: HeroProps) {
     );
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+
+      if (scrollY > 250 && isVisible) {
+        // Animate out only if currently visible
+        gsap.to("#chevron", {
+          opacity: 0,
+          duration: 0.25,
+          ease: "power1.out",
+          pointerEvents: "none",
+        });
+        setIsVisible(false);
+      } else if (scrollY <= 250 && !isVisible) {
+        // Animate in only if currently hidden
+        gsap.to("#chevron", {
+          opacity: 1,
+          duration: 0.25,
+          ease: "power1.out",
+          pointerEvents: "auto",
+        });
+        setIsVisible(true);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isVisible]);
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div className="flex flex-col items-center justify-center min-h-screen min-w-screen relative">
       <div className="flex flex-col items-center">
         <h1 className="header text-4xl font-bold text-white text-wrap max-w-2xl mx-auto text-center">
           <span className="inline-block bg-gradient-to-r from-[#63e] via-gray-100 to-[#63e] text-transparent bg-clip-text bg-[length:200%_100%] animate-wave-text">
@@ -52,9 +84,10 @@ export default function Hero({ scrollToAbout }: HeroProps) {
         </p>
       </div>
       <Button
+        id="chevron"
         variant="ghost"
         onClick={scrollToAbout}
-        className="chevron mt-10 hover:bg-transparent flex flex-col items-center justify-center gap-0 h-fit"
+        className="absolute bottom-10 sm:container mt-5 hover:bg-transparent flex flex-col items-center justify-center gap-0 p-0 h-fit max-w-12"
       >
         <ChevronDown className="min-h-4 min-w-4 text-white animate-bounce [animation-delay:1000ms]" />
         <ChevronDown className="min-h-5 min-w-5 text-white animate-bounce [animation-delay:1150ms]" />
