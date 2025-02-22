@@ -31,9 +31,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         ease: "power1.inOut",
         scrollTrigger: {
           trigger: `#${id}`,
-          start: "20% bottom",
-          end: "50% center",
-          scrub: true,
+          start: "40% bottom",
+          end: "60% center",
         },
       }
     );
@@ -42,7 +41,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   return (
     <Card
       id={id}
-      className="w-full min-w-[16rem] h-auto bg-transparent border-white/20 flex flex-col"
+      className="flex-1 min-w-[300px] bg-transparent border-white/20 flex flex-col"
     >
       <CardHeader>
         <h3 className="text-xl font-semibold text-white">{project.title}</h3>

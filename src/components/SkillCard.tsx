@@ -19,7 +19,7 @@ export default function SkillCard({ id, icon, name, svg }: Skill) {
       {
         opacity: 1,
         x: 0,
-        duration: 0.5 + (id - 1) * 0.15,
+        duration: 0.5 + (id - 1) * 0.1,
         delay: 0.5,
         ease: "power1.inOut",
         scrollTrigger: {

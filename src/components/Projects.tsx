@@ -9,13 +9,7 @@ export default function Projects() {
         <CardHeader>
           <h2 className="text-2xl font-bold text-white">Personal projects</h2>
         </CardHeader>
-        <CardContent
-          className="w-full grid gap-6 px-6"
-          style={{
-            gridTemplateColumns:
-              "repeat(auto-fill, minmax(min(300px, 100%), 1fr))",
-          }}
-        >
+        <CardContent className="flex flex-wrap gap-4 px-6">
           {projects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}
