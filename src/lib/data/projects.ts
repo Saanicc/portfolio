@@ -38,10 +38,4 @@ export const projects: Project[] = [
     ],
     github: "https://github.com/Saanicc/portfolio",
   },
-  {
-    id: 3,
-    title: "Project 3",
-    description: "Description of Project 3",
-    technologies: ["Lorem", "Ipsum", "Dolor"],
-  },
 ];
