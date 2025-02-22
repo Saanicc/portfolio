@@ -49,6 +49,22 @@ export default function Home() {
     );
 
     gsap.fromTo(
+      "#work",
+      { opacity: 0, y: 100 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: "power1.inOut",
+        scrollTrigger: {
+          trigger: "#work",
+          start: "top 70%",
+          toggleActions: "play none none none",
+        },
+      }
+    );
+
+    gsap.fromTo(
       "#projects",
       { opacity: 0, y: 100 },
       {
