@@ -8,6 +8,7 @@ import { Project } from "@/lib/data/projects";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
+import Image from "next/image";
 
 interface ProjectCardProps {
   project: Project;
@@ -47,6 +48,13 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <h3 className="text-xl font-semibold text-white">{project.title}</h3>
       </CardHeader>
       <CardContent className="flex-grow">
+        {project.image && (
+          <Image
+            src={project.image}
+            alt={project.title}
+            className="w-auto h-auto aspect-auto mb-4"
+          />
+        )}
         <p className="text-gray-300 text-sm">{project.description}</p>
         {project.technologies && (
           <div className="flex flex-wrap gap-2 mt-4">

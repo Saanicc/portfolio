@@ -122,7 +122,8 @@ export default function Home() {
         className="mt-20 p-4 left-0 right-0 z-50 bg-white/5 border-t border-white/10"
       >
         <p className="text-center text-white/50 text-sm">
-          &copy; {new Date().getFullYear()} MattansTechLab. All rights reserved.
+          &copy; {new Date().getFullYear()} Mattias Ahlström. All rights
+          reserved.
         </p>
       </footer>
       <Toaster />
