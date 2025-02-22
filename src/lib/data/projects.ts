@@ -24,9 +24,19 @@ export const projects: Project[] = [
   },
   {
     id: 2,
-    title: "Project 2",
-    description: "Description of Project 2",
-    technologies: ["Lorem", "Ipsum", "Dolor"],
+    title: "Personal Portfolio Website",
+    description:
+      "A modern and responsive portfolio website showcasing projects, skills, and contact information. The website features a clean UI. Built with Next.js and Tailwind CSS, animations are handled with GSAP. The site is hosted on Vercel with GitHub integration for continuous deployment.",
+    technologies: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "GSAP",
+      "Vercel",
+      "EmailJS",
+    ],
+    github: "https://github.com/Saanicc/portfolio",
   },
   {
     id: 3,
