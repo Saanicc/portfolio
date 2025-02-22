@@ -21,9 +21,7 @@ const Nav = () => {
           const windowHeight = window.innerHeight;
 
           if (section === "contact") {
-            return (
-              rect.bottom <= windowHeight && rect.bottom >= windowHeight - 50
-            );
+            return rect.bottom <= windowHeight;
           } else {
             const elementCenter = rect.top + rect.height / 2;
             const viewportCenter = windowHeight / 2;
@@ -55,6 +53,12 @@ const Nav = () => {
           behavior: "smooth",
         });
         break;
+      case "work":
+        document.getElementById("work")?.scrollIntoView({
+          block: "nearest",
+          behavior: "smooth",
+        });
+        break;
       case "projects":
         document.getElementById("projects")?.scrollIntoView({
           block: "center",
@@ -74,8 +78,8 @@ const Nav = () => {
   };
 
   return (
-    <div className="fixed w-full flex items-center justify-center z-10 backdrop-blur-md">
-      <div className="flex flex-row gap-6 px-4 py-3 items-center justify-center bg-black/20 border-2 border-t-0 border-white/20 rounded-bl-xl rounded-br-xl">
+    <div className="fixed w-full flex items-center justify-center z-10">
+      <div className="flex flex-row gap-6 px-4 py-3 items-center justify-center bg-black/20 border-2 border-t-0 border-white/20 rounded-bl-xl rounded-br-xl backdrop-blur-md">
         <div
           id="home"
           className={`flex items-center justify-center pb-1 border-b-2 ${
@@ -84,7 +88,8 @@ const Nav = () => {
         >
           <Link
             href="/"
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
             scroll={false}
@@ -110,7 +115,7 @@ const Nav = () => {
             }`}
           >
             <Link
-              href="/"
+              href="#"
               className={`text-white pb-1 border-b-2 ${
                 activeSection === item.name.toLowerCase()
                   ? "border-[#63e]"

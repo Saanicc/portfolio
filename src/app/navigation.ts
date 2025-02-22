@@ -13,9 +13,15 @@ export const navigation: NavItemType[] = [
     title: "About",
   },
   {
+    name: "Work",
+    path: "/work",
+    order: 2,
+    title: "Work",
+  },
+  {
     name: "Projects",
     path: "/projects",
-    order: 2,
+    order: 3,
     title: "Projects",
   },
   {

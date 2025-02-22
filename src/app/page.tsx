@@ -10,6 +10,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import TimelineTree from "@/components/TimelineTree";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -55,9 +56,8 @@ export default function Home() {
         y: 0,
         scrollTrigger: {
           trigger: "#projects",
-          start: "30% bottom",
-          end: "50% center",
-          scrub: true,
+          start: "40% bottom",
+          end: "60% center",
         },
       }
     );
@@ -68,11 +68,10 @@ export default function Home() {
       {
         opacity: 1,
         y: 0,
+        delay: 0.5,
         scrollTrigger: {
           trigger: "#contact",
-          start: "20% bottom",
-          end: "bottom 90%",
-          scrub: true,
+          start: "30% bottom",
         },
       }
     );
@@ -96,6 +95,7 @@ export default function Home() {
             <About />
             <Skills />
           </div>
+          <TimelineTree />
           <Projects />
           <Contact />
         </div>
