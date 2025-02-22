@@ -74,8 +74,8 @@ const Nav = () => {
   };
 
   return (
-    <div className="fixed w-full flex items-center justify-center z-10">
-      <div className="flex flex-row gap-6 px-4 py-3 items-center justify-center bg-black/20 backdrop-blur-md border-2 border-t-0 border-white/20 rounded-bl-xl rounded-br-xl">
+    <div className="fixed w-full flex items-center justify-center z-10 backdrop-blur-md">
+      <div className="flex flex-row gap-6 px-4 py-3 items-center justify-center bg-black/20 border-2 border-t-0 border-white/20 rounded-bl-xl rounded-br-xl">
         <div
           id="home"
           className={`flex items-center justify-center pb-1 border-b-2 ${

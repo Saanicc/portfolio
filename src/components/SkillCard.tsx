@@ -1,8 +1,10 @@
+"use client";
+
 import { Card } from "./ui/card";
 import { Skill } from "@/lib/data/skills";
+import { useGSAP } from "@gsap/react";
 import Image from "next/image";
 import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
 
 export default function SkillCard({ id, icon, name, svg }: Skill) {
   const skillId = `skill-${id}`;
@@ -12,28 +14,27 @@ export default function SkillCard({ id, icon, name, svg }: Skill) {
       `#${skillId}`,
       {
         opacity: 0,
-        x: 500,
+        x: 200,
       },
       {
         opacity: 1,
         x: 0,
-        duration: 0.5 + (id - 1) * 0.1,
+        duration: 0.5 + (id - 1) * 0.15,
         delay: 0.5,
         ease: "power1.inOut",
         scrollTrigger: {
-          trigger: `#${skillId}`,
-
+          trigger: `#skills`,
+          start: "top 70%",
           toggleActions: "play none none none",
         },
       }
     );
-  }, []);
+  }, [id, skillId]);
 
   return (
     <Card
       id={skillId}
-      key={id}
-      className="flex items-center justify-center gap-2 p-3 text-white bg-black/20 border-white/20 backdrop-blur-sm"
+      className="flex items-center justify-center gap-2 p-3 text-white bg-black/20 border-white/20"
     >
       <div className="flex h-auto items-center justify-center">
         {icon ? (

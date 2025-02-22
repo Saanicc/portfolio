@@ -21,17 +21,19 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       `#${id}`,
       {
         opacity: 0,
-        x: 500,
+        y: 100,
       },
       {
         opacity: 1,
-        x: 0,
+        y: 0,
         duration: 0.75,
         delay: 0.25 + (project.id - 1) * 0.25,
         ease: "power1.inOut",
         scrollTrigger: {
           trigger: `#${id}`,
-          toggleActions: "play none none none",
+          start: "20% bottom",
+          end: "50% center",
+          scrub: true,
         },
       }
     );

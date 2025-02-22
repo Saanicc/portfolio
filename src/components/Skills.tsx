@@ -5,9 +5,9 @@ import { Card, CardContent, CardHeader } from "./ui/card";
 export default function Skills() {
   return (
     <section id="skills" className="w-full">
-      <Card className="h-full flex flex-col bg-black/20 border-white/20 backdrop-blur-sm">
+      <Card className="h-full flex flex-col bg-black/20 border-white/20">
         <CardHeader>
-          <h2 className="text-2xl font-bold text-white">My skills</h2>
+          <h2 className="text-2xl font-bold text-white">Skills</h2>
         </CardHeader>
         <CardContent className="flex flex-wrap gap-2">
           {skills.map((skill) => (

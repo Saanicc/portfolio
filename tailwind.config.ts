@@ -59,23 +59,8 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
-      keyframes: {
-        "wave-text": {
-          "0%": {
-            "background-position": "0% 0%",
-          },
-          "50%": {
-            "background-position": "300% 0%",
-          },
-          "100%": {
-            "background-position": "0% 0%",
-          },
-        },
-      },
-      animation: {
-        "wave-text": "wave-text 10s ease infinite",
-      },
     },
   },
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;

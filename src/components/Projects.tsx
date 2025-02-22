@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader } from "./ui/card";
 export default function Projects() {
   return (
     <section id="projects" className="my-10">
-      <Card className="w-full flex flex-col bg-black/20 border-white/20 backdrop-blur-sm">
+      <Card className="w-full flex flex-col bg-black/20 border-white/20">
         <CardHeader>
           <h2 className="text-2xl font-bold text-white">Personal projects</h2>
         </CardHeader>

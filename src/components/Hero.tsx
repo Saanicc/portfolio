@@ -1,13 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { useGSAP } from "@gsap/react";
 import { ChevronDown } from "lucide-react";
 import { gsap } from "gsap";
 import { useEffect, useState } from "react";
+import { useGSAP } from "@gsap/react";
 
 interface HeroProps {
   scrollToAbout: () => void;
 }
-gsap.registerPlugin(useGSAP);
 
 export default function Hero({ scrollToAbout }: HeroProps) {
   const [isVisible, setIsVisible] = useState(true);
@@ -15,14 +14,14 @@ export default function Hero({ scrollToAbout }: HeroProps) {
   useGSAP(() => {
     gsap.fromTo(
       ".header",
-      { opacity: 0, x: -500 },
-      { opacity: 1, x: 0, duration: 1.5, ease: "power1.inOut" }
+      { opacity: 0, y: 100 },
+      { opacity: 1, y: 0, duration: 1, ease: "power1.inOut" }
     );
 
     gsap.fromTo(
       ".info-text",
-      { opacity: 0, x: 500 },
-      { opacity: 1, x: 0, duration: 1.5, ease: "power1.inOut" }
+      { opacity: 0, y: 100 },
+      { opacity: 1, y: 0, delay: 0.25, duration: 1, ease: "power1.inOut" }
     );
 
     gsap.fromTo(
@@ -43,7 +42,6 @@ export default function Hero({ scrollToAbout }: HeroProps) {
       const scrollY = window.scrollY;
 
       if (scrollY > 250 && isVisible) {
-        // Animate out only if currently visible
         gsap.to("#chevron", {
           opacity: 0,
           duration: 0.25,
@@ -52,7 +50,6 @@ export default function Hero({ scrollToAbout }: HeroProps) {
         });
         setIsVisible(false);
       } else if (scrollY <= 250 && !isVisible) {
-        // Animate in only if currently hidden
         gsap.to("#chevron", {
           opacity: 1,
           duration: 0.25,
@@ -68,7 +65,7 @@ export default function Hero({ scrollToAbout }: HeroProps) {
   }, [isVisible]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen min-w-screen relative">
+    <div className="flex flex-col items-center justify-center min-h-dvh min-w-screen relative">
       <div className="flex flex-col items-center">
         <h1 className="header text-4xl font-bold text-white text-wrap max-w-2xl mx-auto text-center">
           <span className="inline-block bg-gradient-to-r from-[#63e] via-gray-100 to-[#63e] text-transparent bg-clip-text bg-[length:200%_100%] animate-wave-text">
