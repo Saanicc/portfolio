@@ -10,10 +10,10 @@ const About = () => {
         <CardContent>
           <div className="text-gray-300 space-y-4">
             <p>
-              Hello! I&apos;m Mattias, a passionate developer focused on
-              creating beautiful and functional web experiences. With a
-              background in frontend development, I bring creativity and
-              technical expertise to every project.
+              I&apos;m a passionate developer focused on creating beautiful and
+              functional web experiences. With a background in frontend
+              development, I bring creativity and technical expertise to every
+              project.
             </p>
             <p>
               When I&apos;m not coding, you can find me playing video games or

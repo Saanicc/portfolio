@@ -64,9 +64,13 @@ export default {
           "0%": { backgroundPosition: "200% 0" },
           "100%": { backgroundPosition: "0% 0" },
         },
+        blink: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0" },
+        },
       },
       animation: {
-        "wave-text": "wave-text 5s ease-in-out infinite",
+        blink: "blink 1s infinite",
       },
     },
   },
