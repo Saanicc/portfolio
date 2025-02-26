@@ -115,7 +115,7 @@ export default function Hero({ scrollToAbout }: HeroProps) {
     <div className="flex flex-col items-center justify-center min-h-dvh min-w-screen relative">
       <div className="flex flex-col items-center">
         <h1 className="header text-4xl font-bold text-wrap max-w-2xl mx-auto text-center text-white">
-          Hi, I am
+          Hello, I am
           <br />
           <span className="text-3xl bg-gradient-to-r from-accent via-gray-100 to-accent text-transparent bg-clip-text bg-[length:200%_100%]">
             <span className="typing-text">{displayText}</span>
