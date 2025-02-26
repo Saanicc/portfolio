@@ -45,19 +45,9 @@ export const skills: Skill[] = [
     svg: ExpoSVG,
   },
   {
-    id: 8,
-    name: "Node.js",
-    icon: "devicon-nodejs-plain",
-  },
-  {
     id: 9,
     name: "Git",
     icon: "devicon-git-plain",
-  },
-  {
-    id: 10,
-    name: "Next.js",
-    icon: "devicon-nextjs-original",
   },
   {
     id: 11,

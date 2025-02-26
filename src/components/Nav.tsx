@@ -83,7 +83,7 @@ const Nav = () => {
         <div
           id="home"
           className={`flex items-center justify-center pb-1 border-b-2 ${
-            activeSection === "home" ? "border-[#63e]" : "border-transparent"
+            activeSection === "home" ? "border-accent" : "border-transparent"
           }`}
         >
           <Link
@@ -110,7 +110,7 @@ const Nav = () => {
             key={item.name}
             className={`text-white pb-1 border-b-2 ${
               activeSection === item.name.toLowerCase()
-                ? "border-[#63e]"
+                ? "border-accent"
                 : "border-transparent"
             }`}
           >
@@ -118,7 +118,7 @@ const Nav = () => {
               href="#"
               className={`text-white pb-1 border-b-2 ${
                 activeSection === item.name.toLowerCase()
-                  ? "border-[#63e]"
+                  ? "border-accent"
                   : "border-transparent"
               }`}
               onClick={(e) => {

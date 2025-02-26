@@ -34,7 +34,7 @@ const TimelineCard: React.FC<{ item: TimelineItem; isLeft: boolean }> = ({
   return (
     <div className="flex flex-col items-center relative">
       {/* Connector Dot */}
-      <div className="hidden md:block absolute w-4 h-4 bg-[#6533ee] rounded-full border border-white/50 left-1/2 transform -translate-x-1/2 z-10"></div>
+      <div className="hidden md:block absolute w-4 h-4 bg-[hsl(var(--accent))] rounded-full border border-white/50 left-1/2 transform -translate-x-1/2 z-10"></div>
 
       <div
         className={`flex flex-col md:w-1/2 ${

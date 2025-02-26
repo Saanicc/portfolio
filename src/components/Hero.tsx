@@ -68,7 +68,7 @@ export default function Hero({ scrollToAbout }: HeroProps) {
     <div className="flex flex-col items-center justify-center min-h-dvh min-w-screen relative">
       <div className="flex flex-col items-center">
         <h1 className="header text-4xl font-bold text-white text-wrap max-w-2xl mx-auto text-center">
-          <span className="inline-block bg-gradient-to-r from-[#63e] via-gray-100 to-[#63e] text-transparent bg-clip-text bg-[length:200%_100%] animate-wave-text">
+          <span className="inline-block bg-gradient-to-r from-accent via-gray-100 to-accent text-transparent bg-clip-text bg-[length:200%_100%] animate-wave-text">
             Mattias Ahlström
           </span>
           <br />

@@ -59,6 +59,15 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      keyframes: {
+        "wave-text": {
+          "0%": { backgroundPosition: "200% 0" },
+          "100%": { backgroundPosition: "0% 0" },
+        },
+      },
+      animation: {
+        "wave-text": "wave-text 5s ease-in-out infinite",
+      },
     },
   },
   // eslint-disable-next-line @typescript-eslint/no-require-imports
