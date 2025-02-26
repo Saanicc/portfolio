@@ -18,7 +18,7 @@ export default function Home() {
   useGSAP(() => {
     gsap.fromTo(
       "#about",
-      { opacity: 0, x: -200 },
+      { opacity: 0, x: -100 },
       {
         opacity: 1,
         x: 0,
@@ -27,6 +27,7 @@ export default function Home() {
         scrollTrigger: {
           trigger: "#about",
           start: "top 70%",
+          end: "90% bottom",
           toggleActions: "play none none none",
         },
       }
@@ -34,7 +35,7 @@ export default function Home() {
 
     gsap.fromTo(
       "#skills",
-      { opacity: 0, x: 200 },
+      { opacity: 0, x: 100 },
       {
         opacity: 1,
         x: 0,
@@ -43,6 +44,7 @@ export default function Home() {
         scrollTrigger: {
           trigger: "#skills",
           start: "top 70%",
+          end: "90% bottom",
           toggleActions: "play none none none",
         },
       }
@@ -50,7 +52,7 @@ export default function Home() {
 
     gsap.fromTo(
       "#work",
-      { opacity: 0, y: 100 },
+      { opacity: 0, y: 50 },
       {
         opacity: 1,
         y: 0,
@@ -59,6 +61,7 @@ export default function Home() {
         scrollTrigger: {
           trigger: "#work",
           start: "top 70%",
+          end: "90% bottom",
           toggleActions: "play none none none",
         },
       }
@@ -66,14 +69,15 @@ export default function Home() {
 
     gsap.fromTo(
       "#projects",
-      { opacity: 0, y: 100 },
+      { opacity: 0, y: 50 },
       {
         opacity: 1,
         y: 0,
         scrollTrigger: {
           trigger: "#projects",
-          start: "40% bottom",
-          end: "60% center",
+          start: "top 70%",
+          end: "90% bottom",
+          toggleActions: "play none none none",
         },
       }
     );
