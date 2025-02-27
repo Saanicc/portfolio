@@ -10,7 +10,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import TimelineTree from "@/components/TimelineTree";
+import TimelineTree from "@/components/Timeline/TimelineTree";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
