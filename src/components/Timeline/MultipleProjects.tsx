@@ -1,5 +1,6 @@
 import { TimelineItem } from "@/lib/data/work";
 import BulletPointDetails from "./BulletPointDetails";
+import { CardContent } from "../ui/card";
 
 const MultipleProjects = ({
   projects,
@@ -9,7 +10,7 @@ const MultipleProjects = ({
   if (!projects) return null;
 
   return (
-    <>
+    <CardContent className="flex-grow">
       {projects.map((project, index) => (
         <div key={project.title} className={`${index % 2 !== 0 ? "mt-4" : ""}`}>
           <h5 className="text-md text-white font-semibold">{project.title}</h5>
@@ -27,7 +28,7 @@ const MultipleProjects = ({
           </div>
         </div>
       ))}
-    </>
+    </CardContent>
   );
 };
 
