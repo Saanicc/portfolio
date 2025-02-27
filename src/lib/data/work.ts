@@ -16,10 +16,16 @@ export type TimelineItem = {
 
 export const timelineData: TimelineItem[] = [
   {
+    id: 0,
+    title: "Developer at your company?",
+    company: "???",
+    date: "??? - ???",
+  },
+  {
     id: 1,
     title: "Frontend Developer (Consultant)",
-    date: "April 2023 - August 2024",
     company: "Smart Europe GmbH",
+    date: "April 2023 - August 2024",
     project: {
       summary:
         "Developed and maintained an advanced agent platform, focusing on scalable and efficient frontend solutions. Key responsibilities included:",
@@ -49,8 +55,8 @@ export const timelineData: TimelineItem[] = [
   {
     id: 2,
     title: "Software Developer (Frontend focus)",
-    date: "October 2022 - February 2025",
     company: "Technogarden AB",
+    date: "October 2022 - February 2025",
     projects: [
       {
         title: "Do Good Get Good - In House Project",
@@ -88,8 +94,8 @@ export const timelineData: TimelineItem[] = [
   {
     id: 3,
     title: "Frontend Developer - Internship",
-    date: "January 2022 - May 2022",
     company: "Technogarden AB",
+    date: "January 2022 - May 2022",
     project: {
       summary:
         "Assisted in developing a cross-platform mobile app, from the ground up, for tracking volunteer and freelance work. The project followed a structured development process, from mockups to implementation. Key contributions included:",
