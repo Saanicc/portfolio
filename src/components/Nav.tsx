@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { navigation } from "@/app/navigation";
 import Link from "next/link";
+import { House } from "lucide-react";
+import { scrollToSection } from "@/lib/utils";
 
 const Nav = () => {
   const [activeSection, setActiveSection] = useState<string>("home");
@@ -44,60 +46,9 @@ const Nav = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
-    switch (sectionId) {
-      case "home":
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        break;
-      case "about":
-        const aboutSection = document.getElementById("about");
-        if (aboutSection) {
-          const yOffset = -100;
-          const y =
-            aboutSection.getBoundingClientRect().top + window.scrollY + yOffset;
-          window.scrollTo({ top: y, behavior: "smooth" });
-        }
-        break;
-      case "work":
-        const workSection = document.getElementById("work");
-        if (workSection) {
-          const yOffset = -100;
-          const y =
-            workSection.getBoundingClientRect().top + window.scrollY + yOffset;
-          window.scrollTo({ top: y, behavior: "smooth" });
-        }
-        break;
-      case "projects":
-        const projectsSection = document.getElementById("projects");
-        if (projectsSection) {
-          const yOffset = -100;
-          const y =
-            projectsSection.getBoundingClientRect().top +
-            window.scrollY +
-            yOffset;
-          window.scrollTo({ top: y, behavior: "smooth" });
-        }
-        break;
-      case "contact":
-        const contactSection = document.getElementById("contact");
-        if (contactSection) {
-          const yOffset = -100;
-          const y =
-            contactSection.getBoundingClientRect().top +
-            window.scrollY +
-            yOffset;
-          window.scrollTo({ top: y, behavior: "smooth" });
-        }
-        break;
-      default:
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        break;
-    }
-  };
-
   return (
-    <div className="fixed w-full flex items-center justify-center z-10">
-      <div className="flex flex-row gap-6 px-4 py-3 items-center justify-center bg-black/20 border-2 border-t-0 border-white/20 rounded-bl-xl rounded-br-xl backdrop-blur-md">
+    <div className="fixed bottom-0 sm:bottom-auto w-full flex items-center justify-center z-10">
+      <div className="flex flex-row gap-6 px-4 py-4 w-full sm:w-auto items-center justify-evenly sm:justify-center bg-black/20 border-t-[1px] sm:border-t-0 sm:border-b-2 sm:border-x-2 border-white/20 sm:rounded-bl-xl sm:rounded-br-xl sm:rounded-tl-none sm:rounded-tr-none backdrop-blur-md">
         <div
           id="home"
           className={`flex items-center justify-center pb-1 border-b-2 ${
@@ -112,15 +63,7 @@ const Nav = () => {
             }}
             scroll={false}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-6 h-6 text-white"
-            >
-              <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
-              <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
-            </svg>
+            <House />
           </Link>
         </div>
         {navigation.map((item) => (
@@ -134,7 +77,7 @@ const Nav = () => {
           >
             <Link
               href="#"
-              className={`text-white pb-1 border-b-2 ${
+              className={`text-white pb-1  ${
                 activeSection === item.name.toLowerCase()
                   ? "border-accent"
                   : "border-transparent"
@@ -144,7 +87,10 @@ const Nav = () => {
                 scrollToSection(item.name.toLowerCase());
               }}
             >
-              {item.name}
+              <div className="block sm:hidden">
+                <item.icon />
+              </div>
+              <div className="hidden sm:block">{item.name}</div>
             </Link>
           </div>
         ))}

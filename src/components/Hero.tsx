@@ -3,12 +3,9 @@ import { ChevronDown } from "lucide-react";
 import { gsap } from "gsap";
 import { useEffect, useState, useRef } from "react";
 import { useGSAP } from "@gsap/react";
+import { scrollToSection } from "@/lib/utils";
 
-interface HeroProps {
-  scrollToAbout: () => void;
-}
-
-export default function Hero({ scrollToAbout }: HeroProps) {
+export default function Hero() {
   const [isVisible, setIsVisible] = useState(true);
   const [displayText, setDisplayText] = useState("");
   const phraseIndex = useRef(0);
@@ -131,8 +128,8 @@ export default function Hero({ scrollToAbout }: HeroProps) {
       <Button
         id="chevron"
         variant="ghost"
-        onClick={scrollToAbout}
-        className="absolute bottom-10 sm:container mt-5 hover:bg-transparent flex flex-col items-center justify-center gap-0 p-0 h-fit max-w-12"
+        onClick={() => scrollToSection("about")}
+        className="absolute bottom-20 sm:bottom-2 sm:container mt-5 hover:bg-transparent flex flex-col items-center justify-center gap-0 p-0 h-fit max-w-12"
       >
         <ChevronDown className="min-h-4 min-w-4 text-white animate-bounce [animation-delay:1000ms]" />
         <ChevronDown className="min-h-5 min-w-5 text-white animate-bounce [animation-delay:1150ms]" />

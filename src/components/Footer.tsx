@@ -2,7 +2,7 @@ const Footer = () => {
   return (
     <footer
       id="footer"
-      className="p-4 left-0 right-0 z-50 bg-white/5 border-t border-white/10"
+      className="p-4 left-0 right-0 z-50 bg-white/5 border-t border-white/10 pb-20 sm:pb-4"
     >
       <div className="flex justify-center space-x-4 mb-4">
         <a
