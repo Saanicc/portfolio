@@ -1,6 +1,6 @@
 import ProjectCard from "./ProjectCard";
 import { projects } from "@/lib/data/projects";
-import { Card, CardContent, CardHeader } from "./ui/card";
+import { Card, CardContent, CardHeader } from "../ui/card";
 
 export default function Projects() {
   return (

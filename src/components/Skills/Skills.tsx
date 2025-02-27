@@ -1,6 +1,6 @@
 import SkillCard from "./SkillCard";
 import { skills } from "@/lib/data/skills";
-import { Card, CardContent, CardHeader } from "./ui/card";
+import { Card, CardContent, CardHeader } from "../ui/card";
 
 export default function Skills() {
   return (

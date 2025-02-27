@@ -26,8 +26,7 @@ const TimelineCard: React.FC<{ item: TimelineItem; isLeft: boolean }> = ({
         ease: "power1.inOut",
         scrollTrigger: {
           trigger: `#${id}`,
-          start: "50% bottom",
-          end: "60% center",
+          start: "20% bottom",
         },
       }
     );

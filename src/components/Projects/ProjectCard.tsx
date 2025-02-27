@@ -32,7 +32,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         ease: "power1.inOut",
         scrollTrigger: {
           trigger: `#${id}`,
-          start: "top 70%",
+          start: "top 80%",
           end: "90% bottom",
           toggleActions: "play none none none",
         },

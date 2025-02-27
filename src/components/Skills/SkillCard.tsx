@@ -1,6 +1,6 @@
 "use client";
 
-import { Card } from "./ui/card";
+import { Card } from "../ui/card";
 import { Skill } from "@/lib/data/skills";
 import { useGSAP } from "@gsap/react";
 import Image from "next/image";

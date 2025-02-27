@@ -1,9 +1,9 @@
 "use client";
 
 import Nav from "@/components/Nav";
-import Projects from "@/components/Projects";
+import Projects from "@/components/Projects/Projects";
 import Hero from "@/components/Hero";
-import Skills from "@/components/Skills";
+import Skills from "@/components/Skills/Skills";
 import Contact from "@/components/Contact";
 import About from "@/components/About";
 import { Toaster } from "@/components/ui/toaster";
@@ -11,13 +11,14 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import TimelineTree from "@/components/Timeline/TimelineTree";
+import Footer from "@/components/Footer";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export default function Home() {
   useGSAP(() => {
     gsap.fromTo(
-      "#about",
+      "#about-info",
       { opacity: 0, x: -100 },
       {
         opacity: 1,
@@ -25,7 +26,7 @@ export default function Home() {
         duration: 0.5,
         ease: "power1.inOut",
         scrollTrigger: {
-          trigger: "#about",
+          trigger: "#about-info",
           start: "top 70%",
           end: "90% bottom",
           toggleActions: "play none none none",
@@ -60,8 +61,7 @@ export default function Home() {
         ease: "power1.inOut",
         scrollTrigger: {
           trigger: "#work",
-          start: "top 70%",
-          end: "90% bottom",
+          start: "top 90%",
           toggleActions: "play none none none",
         },
       }
@@ -75,7 +75,7 @@ export default function Home() {
         y: 0,
         scrollTrigger: {
           trigger: "#projects",
-          start: "top 70%",
+          start: "top 80%",
           end: "90% bottom",
           toggleActions: "play none none none",
         },
@@ -91,7 +91,7 @@ export default function Home() {
         delay: 0.5,
         scrollTrigger: {
           trigger: "#contact",
-          start: "30% bottom",
+          start: "40% bottom",
         },
       }
     );
@@ -111,41 +111,20 @@ export default function Home() {
       <main className="flex flex-col items-center overflow-hidden">
         <div className="flex flex-col items-center justify-center px-5 md:max-w-4xl lg:max-w-screen-xl">
           <Hero scrollToAbout={scrollToAbout} />
-          <div className="flex flex-col sm:flex-row w-full my-20 md:px-0 gap-4">
+          <section
+            id="about"
+            className="flex flex-col sm:flex-row w-full my-20 md:px-0 gap-4"
+          >
             <About />
             <Skills />
-          </div>
+          </section>
           <TimelineTree />
           <Projects />
           <Contact />
         </div>
       </main>
 
-      <footer
-        id="footer"
-        className="mt-20 p-4 left-0 right-0 z-50 bg-white/5 border-t border-white/10"
-      >
-        <div className="flex justify-center space-x-4 mb-4">
-          <a
-            href="https://www.linkedin.com/in/mattias-ahlstr%C3%B6m-10b180180/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xl text-white/70 hover:text-white transition-colors devicon-linkedin-plain"
-            aria-label="LinkedIn"
-          />
-          <a
-            href="https://github.com/Saanicc"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xl text-white/70 hover:text-white transition-colors devicon-github-plain"
-            aria-label="GitHub"
-          />
-        </div>
-        <p className="text-center text-white/50 text-sm">
-          &copy; {new Date().getFullYear()} Mattias Ahlström. All rights
-          reserved.
-        </p>
-      </footer>
+      <Footer />
       <Toaster />
     </>
   );
