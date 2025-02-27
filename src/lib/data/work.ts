@@ -16,12 +16,6 @@ export type TimelineItem = {
 
 export const timelineData: TimelineItem[] = [
   {
-    id: 0,
-    title: "Developer at your company?",
-    company: "???",
-    date: "??? - ???",
-  },
-  {
     id: 1,
     title: "Frontend Developer (Consultant)",
     company: "Smart Europe GmbH",
