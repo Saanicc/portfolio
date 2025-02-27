@@ -12,21 +12,23 @@ const Nav = () => {
         return;
       }
 
+      const scrollPosition = window.scrollY + window.innerHeight;
+      const bottomThreshold = document.documentElement.scrollHeight - 100;
+
+      if (scrollPosition >= bottomThreshold) {
+        setActiveSection("contact");
+        return;
+      }
+
       const sections = navigation.map((item) => item.name.toLowerCase());
 
       const current = sections.find((section) => {
+        if (section === "contact") return false;
+
         const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
-          const windowHeight = window.innerHeight;
-
-          if (section === "contact") {
-            return rect.bottom <= windowHeight;
-          } else {
-            const elementCenter = rect.top + rect.height / 2;
-            const viewportCenter = windowHeight / 2;
-            return Math.abs(elementCenter - viewportCenter) <= 100;
-          }
+          return rect.top <= 100 && rect.bottom > 100;
         }
         return false;
       });
@@ -48,28 +50,44 @@ const Nav = () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
         break;
       case "about":
-        document.getElementById("about")?.scrollIntoView({
-          block: "center",
-          behavior: "smooth",
-        });
+        const aboutSection = document.getElementById("about");
+        if (aboutSection) {
+          const yOffset = -100;
+          const y =
+            aboutSection.getBoundingClientRect().top + window.scrollY + yOffset;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
         break;
       case "work":
-        document.getElementById("work")?.scrollIntoView({
-          block: "nearest",
-          behavior: "smooth",
-        });
+        const workSection = document.getElementById("work");
+        if (workSection) {
+          const yOffset = -100;
+          const y =
+            workSection.getBoundingClientRect().top + window.scrollY + yOffset;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
         break;
       case "projects":
-        document.getElementById("projects")?.scrollIntoView({
-          block: "center",
-          behavior: "smooth",
-        });
+        const projectsSection = document.getElementById("projects");
+        if (projectsSection) {
+          const yOffset = -100;
+          const y =
+            projectsSection.getBoundingClientRect().top +
+            window.scrollY +
+            yOffset;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
         break;
       case "contact":
-        document.getElementById("contact")?.scrollIntoView({
-          block: "center",
-          behavior: "smooth",
-        });
+        const contactSection = document.getElementById("contact");
+        if (contactSection) {
+          const yOffset = -100;
+          const y =
+            contactSection.getBoundingClientRect().top +
+            window.scrollY +
+            yOffset;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
         break;
       default:
         window.scrollTo({ top: 0, behavior: "smooth" });
