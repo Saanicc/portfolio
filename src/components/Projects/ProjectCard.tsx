@@ -27,7 +27,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       {
         opacity: 1,
         y: 0,
-        duration: 0.75,
+        duration: 0.5,
         delay: 0.25 + (project.id - 1) * 0.25,
         ease: "power1.inOut",
         scrollTrigger: {

@@ -19,11 +19,13 @@ export default function Home() {
   useGSAP(() => {
     gsap.fromTo(
       "#about-info",
-      { opacity: 0, x: -100 },
+      { opacity: 0, x: -100, scale: 1.1 },
       {
         opacity: 1,
         x: 0,
+        scale: 1,
         duration: 0.5,
+        delay: 0.25,
         ease: "power1.inOut",
         scrollTrigger: {
           trigger: "#about-info",
@@ -36,11 +38,13 @@ export default function Home() {
 
     gsap.fromTo(
       "#skills",
-      { opacity: 0, x: 100 },
+      { opacity: 0, x: 100, scale: 1.1 },
       {
         opacity: 1,
         x: 0,
+        scale: 1,
         duration: 0.5,
+        delay: 0.25,
         ease: "power1.inOut",
         scrollTrigger: {
           trigger: "#skills",
@@ -84,11 +88,14 @@ export default function Home() {
 
     gsap.fromTo(
       "#contact",
-      { opacity: 0, y: 100 },
+      { opacity: 0, scale: 0.95, y: 200 },
       {
         opacity: 1,
+        scale: 1,
         y: 0,
         delay: 0.5,
+        ease: "sine",
+        duration: 0.5,
         scrollTrigger: {
           trigger: "#contact",
           start: "40% bottom",
