@@ -21,6 +21,14 @@ const About = () => {
               continuous learning and staying up-to-date with the latest
               technologies and industry trends.
             </p>
+            <p>
+              For my next professional chapter, I&apos;m seeking a role where I can channel my passion for building 
+              intuitive, user-centered interfaces into meaningful products that make a difference. 
+              I thrive in collaborative environments where user experience is prioritized, 
+              and I can contribute to projects that challenge me to continuously refine my craft. 
+              My ideal position would combine creative problem-solving with technical innovation, 
+              allowing me to create digital experiences that users not only use, but truly love.
+            </p>
           </div>
         </CardContent>
       </Card>
