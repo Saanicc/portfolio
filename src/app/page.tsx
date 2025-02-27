@@ -104,12 +104,6 @@ export default function Home() {
     );
   }, []);
 
-  const scrollToAbout = () => {
-    document
-      .getElementById("about")
-      ?.scrollIntoView({ block: "center", behavior: "smooth" });
-  };
-
   return (
     <>
       <div className="fixed min-h-dvh inset-0 -z-10 w-full items-center [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,hsl(var(--accent))_100%)]"></div>
@@ -117,7 +111,7 @@ export default function Home() {
       <Nav />
       <main className="flex flex-col items-center overflow-hidden">
         <div className="flex flex-col items-center justify-center px-5 md:max-w-4xl lg:max-w-screen-xl">
-          <Hero scrollToAbout={scrollToAbout} />
+          <Hero />
           <section
             id="about"
             className="flex flex-col sm:flex-row w-full my-20 md:px-0 gap-4 h-auto"
