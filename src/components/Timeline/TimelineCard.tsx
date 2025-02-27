@@ -36,7 +36,7 @@ const TimelineCard: React.FC<{ item: TimelineItem; isLeft: boolean }> = ({
     <div className="flex flex-col items-center relative">
       <div className="hidden md:block absolute w-4 h-4 bg-[hsl(var(--accent))] rounded-full border border-white/50 left-1/2 transform -translate-x-1/2 z-10"></div>
       <div
-        className={`flex flex-col md:w-1/2 ${
+        className={`flex flex-col w-full md:w-1/2 ${
           isLeft ? "md:self-start md:pr-10" : "md:self-end md:pl-10"
         }`}
       >

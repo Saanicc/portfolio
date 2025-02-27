@@ -113,7 +113,7 @@ export default function Home() {
           <Hero scrollToAbout={scrollToAbout} />
           <section
             id="about"
-            className="flex flex-col sm:flex-row w-full my-20 md:px-0 gap-4"
+            className="flex flex-col sm:flex-row w-full my-20 md:px-0 gap-4 h-auto"
           >
             <About />
             <Skills />
