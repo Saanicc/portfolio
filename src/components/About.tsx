@@ -10,24 +10,23 @@ const About = () => {
         <CardContent>
           <div className="text-gray-300 space-y-4">
             <p>
-              I&apos;m a passionate developer focused on creating beautiful and
-              functional web experiences. With a background in frontend
-              development, I bring creativity and technical expertise to every
-              project.
+              I’m a frontend developer who loves crafting clean, functional, and
+              visually appealing web experiences. With a strong focus on design
+              and usability, I enjoy turning ideas into interactive, seamless
+              interfaces.
             </p>
             <p>
-              When I&apos;m not coding, you can find me playing video games or
-              exploring new technologies when time allows. I believe in
-              continuous learning and staying up-to-date with the latest
-              technologies and industry trends.
+              When I’m not coding, you’re most likely to find me at the gym, at
+              home gaming or diving into new technologies whenever I get the
+              chance. I’m always looking to learn and stay on top of the latest
+              trends in web development.
             </p>
             <p>
-              For my next professional chapter, I&apos;m seeking a role where I can channel my passion for building 
-              intuitive, user-centered interfaces into meaningful products that make a difference. 
-              I thrive in collaborative environments where user experience is prioritized, 
-              and I can contribute to projects that challenge me to continuously refine my craft. 
-              My ideal position would combine creative problem-solving with technical innovation, 
-              allowing me to create digital experiences that users not only use, but truly love.
+              I’m currently looking for a role where I can build intuitive,
+              user-friendly products that have a real impact. I thrive in
+              collaborative environments that prioritize great user experiences,
+              and I’m always eager to take on new challenges that push me to
+              grow both creatively and technically.
             </p>
           </div>
         </CardContent>

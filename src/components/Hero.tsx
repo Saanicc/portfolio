@@ -120,9 +120,9 @@ export default function Hero() {
           </span>
         </h1>
         <p className="info-text text-lg text-white mt-6 text-center max-w-2xl">
-          I specialize in creating seamless user experiences for web and mobile
-          applications using React and React Native. Passionate about building
-          intuitive, responsive interfaces that users love.
+          I build smooth, user-friendly experiences for web and mobile using
+          React and React Native. I’m passionate about crafting intuitive,
+          responsive interfaces that feel great to use.
         </p>
       </div>
       <Button
