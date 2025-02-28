@@ -31,22 +31,33 @@ export default function SkillCard({ id, icon, name, svg, ranking }: Skill) {
     );
   }, [id, skillId]);
 
-  const renderRankingDots = () => {
-    const dots = [];
+  const SkillRanking = ({ ranking }: { ranking: Skill["ranking"] }) => {
     const maxRanking = 5;
+    const rankingLabels = [
+      "Learning",
+      "Familiar",
+      "Comfortable",
+      "Proficient",
+      "Experienced",
+    ];
 
-    for (let i = 1; i <= maxRanking; i++) {
-      dots.push(
-        <div
-          key={i}
-          className={`w-1.5 h-1.5 rounded-full ${
-            i <= ranking ? "bg-white" : "bg-white/30"
-          }`}
-        />
-      );
-    }
-
-    return dots;
+    return (
+      <div className="flex flex-col gap-1">
+        <div className="flex gap-1">
+          {Array.from({ length: maxRanking }, (_, i) => (
+            <div
+              key={i}
+              className={`w-1.5 h-1.5 rounded-full ${
+                i + 1 <= ranking ? "bg-white" : "bg-white/30"
+              }`}
+            />
+          ))}
+        </div>
+        <span className="text-sm text-white/80">
+          {rankingLabels[ranking - 1]}
+        </span>
+      </div>
+    );
   };
 
   return (
@@ -64,7 +75,9 @@ export default function SkillCard({ id, icon, name, svg, ranking }: Skill) {
         </div>
         <span className="text-sm">{name}</span>
       </div>
-      <div className="flex gap-1 mt-1">{renderRankingDots()}</div>
+      <div className="flex flex-col gap-1 mt-1">
+        <SkillRanking ranking={ranking} />
+      </div>
     </Card>
   );
 }
