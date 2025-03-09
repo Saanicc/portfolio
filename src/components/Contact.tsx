@@ -19,7 +19,15 @@ import { Card, CardHeader, CardContent } from "./ui/card";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
-  email: z.string().email("Please enter a valid email address."),
+  email: z
+    .string()
+    .email("Please enter a valid email address.")
+    .refine(
+      (email) => !email.endsWith("@qq.com") && !email.endsWith("@163.com"),
+      {
+        message: "Emails from qq.com and 163.com are not allowed.",
+      }
+    ),
   message: z.string().min(10, "Message must be at least 10 characters."),
 });
 
