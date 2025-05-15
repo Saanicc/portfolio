@@ -1,5 +1,6 @@
 import wallpaperGallery from "../../../public/assets/wallpaper-gallery.png";
 import portfolio from "../../../public/assets/portfolio.png";
+import nationsHub from "../../../public/assets/nations-hub.png";
 import { StaticImageData } from "next/image";
 
 export interface Project {
@@ -9,11 +10,30 @@ export interface Project {
   description: string;
   technologies?: string[];
   github?: string;
+  liveUrl?: string;
 }
 
 export const projects: Project[] = [
   {
     id: 1,
+    title: "Nations Hub",
+    image: nationsHub,
+    description:
+      "Your place for information about countries around the world. You can search for a country and get information about its population, currency, languages, and more.",
+    technologies: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Vercel",
+      "Restcountries API",
+      "Tanstack Query",
+    ],
+    github: "https://github.com/Saanicc/nations-hub",
+    liveUrl: "https://nations-hub.mattanstechlab.com/",
+  },
+  {
+    id: 2,
     title: "Wallpaper gallery app",
     image: wallpaperGallery,
     description:
@@ -29,7 +49,7 @@ export const projects: Project[] = [
     github: "https://github.com/Saanicc/WallpaperGallery",
   },
   {
-    id: 2,
+    id: 3,
     title: "Personal Portfolio Website",
     image: portfolio,
     description:
