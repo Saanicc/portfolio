@@ -1,364 +1,135 @@
 "use client";
 
-import { useState } from "react";
-import { addProject } from "@/lib/firebase/projects";
-import { Card, CardContent, CardHeader } from "../ui/card";
-import { useForm } from "react-hook-form";
-import { Button } from "../ui/button";
+import { useEffect, useState } from "react";
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Textarea } from "../ui/textarea";
-import { Input } from "@/components/ui/input";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { storage } from "@/lib/firebase/init";
-import { getDownloadURL, ref, uploadBytes } from "@firebase/storage";
-
-const formSchema = z.object({
-  title: z.string().min(2, "Title must be at least 2 characters."),
-  description: z
-    .string()
-    .min(10, "Description must be at least 10 characters."),
-  technologies: z
-    .array(z.string())
-    .min(1, "At least one technology is required"),
-  githubUrl: z.string().url("Please enter a valid GitHub URL").optional(),
-  liveUrl: z.string().url("Please enter a valid live URL"),
-});
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
+import { deleteProject, getProjects } from "@/lib/firebase/projects";
+import { Project } from "@/types/project";
+import { Button } from "../ui/button";
+import { UpdateProject } from "./Projects/UpdateProject";
 
 export const AdminPanel: React.FC = () => {
-  const [techInput, setTechInput] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [item, setItem] = useState<Project>();
+  const [projects, setProjects] = useState<Project[]>([]);
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const data = await getProjects();
+      setProjects(data);
+    };
 
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string>("");
-  const [uploadProgress, setUploadProgress] = useState<string>("");
+    fetchProjects();
+  }, []);
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      title: "",
-      description: "",
-      technologies: [],
-      liveUrl: "",
-      githubUrl: "",
-    },
-  });
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      if (!file.type.startsWith("image/")) {
-        alert("Please select an image file");
-        return;
-      }
-
-      if (file.size > 5 * 1024 * 1024) {
-        alert("Image must be less than 5MB");
-        return;
-      }
-
-      setImageFile(file);
-
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImagePreview(e.target?.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
+  const handleDeleteClick = (item: Project) => {
+    setItem(item);
+    setShowPopup(true);
   };
 
-  const uploadImage = async (
-    file: File,
-    projectTitle: string
-  ): Promise<string> => {
-    const timestamp = Date.now();
-    const sanitizedTitle = projectTitle
-      .toLowerCase()
-      .replace(/[^a-z0-9]/g, "-");
-    const fileName = `projects/${sanitizedTitle}-${timestamp}.${file.name
-      .split(".")
-      .pop()}`;
+  const DeletePopup = ({ item }: { item: Project }) => {
+    return (
+      <div className="flex items-center justify-center w-screen h-screen bg-black/50 absolute">
+        <Card>
+          <CardHeader className="p-[20px] pb-3">
+            <CardTitle>Delete project</CardTitle>
+          </CardHeader>
+          <CardContent className="pl-[20px] pr-[20px]">
+            <CardDescription>
+              Are you sure you want to delete &apos;{item.title}&apos;?
+            </CardDescription>
+          </CardContent>
 
-    const storageRef = ref(storage, fileName);
-
-    setUploadProgress("Uploading image...");
-
-    try {
-      const snapshot = await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(snapshot.ref);
-      setUploadProgress("");
-      return downloadURL;
-    } catch (error) {
-      setUploadProgress("");
-      console.error(error);
-      throw new Error("Failed to upload image");
-    }
-  };
-
-  const onSubmit = async () => {
-    if (!imageFile) {
-      alert("Please select an image for the project");
-      return;
-    }
-
-    const formData = form.getValues();
-
-    setLoading(true);
-
-    try {
-      const imageUrl = await uploadImage(imageFile, formData.title);
-
-      await addProject({
-        ...formData,
-        imageUrl,
-      });
-
-      alert("Project added successfully!");
-
-      form.reset();
-      setImageFile(null);
-      setImagePreview("");
-      setUploadProgress("");
-
-      const fileInput = document.getElementById(
-        "image-upload"
-      ) as HTMLInputElement;
-      if (fileInput) fileInput.value = "";
-    } catch (error) {
-      alert("Error adding project. Check console for details.");
-      console.error("Error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const addTechnology = () => {
-    if (
-      techInput.trim() &&
-      !form.getValues("technologies").includes(techInput.trim())
-    ) {
-      const currentTechs = form.getValues("technologies");
-      form.setValue("technologies", [...currentTechs, techInput.trim()]);
-      form.trigger("technologies");
-      setTechInput("");
-    }
-  };
-
-  const removeTechnology = (tech: string) => {
-    const currentTechs = form.getValues("technologies");
-    form.setValue(
-      "technologies",
-      currentTechs.filter((t) => t !== tech)
+          <CardFooter className="p-[20px] pt-0">
+            <div className="flex gap-1">
+              <Button
+                variant="ghost"
+                className="border hover:bg-muted"
+                onClick={() => {
+                  setItem(undefined);
+                  setShowPopup(false);
+                }}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant={"destructive"}
+                onClick={() => deleteProject(item.id)}
+              >
+                Delete
+              </Button>
+            </div>
+          </CardFooter>
+        </Card>
+      </div>
     );
-    form.trigger("technologies");
+  };
+
+  const handleUpdateClick = (item: Project) => {
+    setItem(item);
+    setShowModal(true);
+  };
+
+  const Modal = () => {
+    const closeModal = () => {
+      setItem(undefined);
+      setShowModal(false);
+    };
+
+    return (
+      <div className="flex absolute w-full h-screen items-center justify-center bg-black/60">
+        <UpdateProject defaultData={item} closeModal={closeModal} />
+      </div>
+    );
   };
 
   return (
-    <Card className="flex flex-col w-1/2 pb-6 bg-black/20 border-white/20">
-      <CardHeader>
-        <h2 className="text-2xl font-bold text-white">Add New Project</h2>
-      </CardHeader>
-      <CardContent className="pb-0 text-white">
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="w-full space-y-4"
-          >
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-white">Title</FormLabel>
-                  <FormControl>
-                    <Input
-                      className="border-white/30"
-                      placeholder="Project title"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+    <div className="flex flex-col w-full h-screen items-center">
+      <h1 className="text-4xl m-4">Welcome, Admin!</h1>
 
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-white">Description</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      {...field}
-                      placeholder="Project description"
-                      className="resize-none min-h-[100px] overflow-hidden h-auto border-white/30"
-                      rows={4}
-                      onInput={(e) => {
-                        const target = e.target as HTMLTextAreaElement;
-                        target.style.height = "auto";
-                        target.style.height = `${target.scrollHeight}px`;
-                      }}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+      {showPopup && item && <DeletePopup item={item} />}
+      {showModal && <Modal />}
 
-            <div className="space-y-3">
-              <FormLabel>Project Image</FormLabel>
-              <div className="space-y-3">
-                <Input
-                  id="image-upload"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleImageChange}
-                  className="h-auto cursor-pointer border-white/30"
-                />
-                <p className="text-sm text-muted-foreground">
-                  Max file size: 5MB. Supported formats: JPG, PNG, WebP
-                </p>
-
-                {uploadProgress && (
-                  <p className="text-sm text-blue-600">{uploadProgress}</p>
-                )}
-
-                {imagePreview && (
-                  <div className="space-y-2">
-                    <p className="text-sm font-medium">Preview:</p>
-                    <div className="relative w-[50%]">
-                      {/* eslint-disable-next-line @next/next/no-img-element*/}
-                      <img
-                        src={imagePreview}
-                        alt="Preview"
-                        className="w-full h-auto object-cover rounded-lg border"
-                      />
-                      <Button
-                        type="button"
-                        variant="destructive"
-                        size="sm"
-                        className="absolute top-2 right-2"
-                        onClick={() => {
-                          setImageFile(null);
-                          setImagePreview("");
-                          const fileInput = document.getElementById(
-                            "image-upload"
-                          ) as HTMLInputElement;
-                          if (fileInput) fileInput.value = "";
-                        }}
-                      >
-                        Remove
-                      </Button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <FormField
-              control={form.control}
-              name="technologies"
-              render={() => (
-                <FormItem>
-                  <FormLabel className="text-white">Technologies</FormLabel>
-                  <FormControl>
-                    <div className="space-y-3">
-                      <div className="flex gap-2">
-                        <Input
-                          placeholder="Enter technology"
-                          value={techInput}
-                          onChange={(e) => setTechInput(e.target.value)}
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter") {
-                              e.preventDefault();
-                              addTechnology();
-                            }
-                          }}
-                          className="flex-1 border-white/30"
-                        />
-                        <Button
-                          type="button"
-                          variant="outline"
-                          onClick={addTechnology}
-                          className="border-white/30"
-                        >
-                          Add
-                        </Button>
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {form.watch("technologies").map((tech) => (
-                          <div
-                            key={tech}
-                            className="px-3 py-1 outline outline-white/30 text-primary-foreground rounded-md flex items-center gap-2 text-sm"
-                          >
-                            {tech}
-                            <button
-                              type="button"
-                              onClick={() => removeTechnology(tech)}
-                              className="text-muted-foreground hover:text-destructive"
-                            >
-                              ×
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="liveUrl"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-white">Demo URL</FormLabel>
-                  <FormControl>
-                    <Input
-                      className="border-white/30"
-                      placeholder="Project demo URL"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="githubUrl"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-white">GitHub URL</FormLabel>
-                  <FormControl>
-                    <Input
-                      className="border-white/30"
-                      placeholder="Project GitHub URL"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Adding..." : "Add Project"}
+      <div className="w-full h-full flex flex-row items-center justify-center gap-10">
+        <div>
+          <div className="flex justify-between items-center mb-4">
+            <p className="text-xl font-bold">Projects</p>
+            <Button variant="secondary" onClick={() => setShowModal(true)}>
+              Add new project
             </Button>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+          </div>
+          {projects.map((project) => (
+            <Card
+              key={project.id}
+              className="bg-transparent text-white border-white/30 mb-2"
+            >
+              <CardContent className="flex flex-col items-center justify-center">
+                <CardTitle className="p-4">{project.title}</CardTitle>
+                <div className="flex gap-1">
+                  <Button
+                    variant="secondary"
+                    onClick={() => handleUpdateClick(project)}
+                  >
+                    Update
+                  </Button>
+                  <Button
+                    variant={"destructive"}
+                    onClick={() => handleDeleteClick(project)}
+                  >
+                    Delete
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
