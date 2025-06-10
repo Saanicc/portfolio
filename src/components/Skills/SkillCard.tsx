@@ -1,13 +1,19 @@
 "use client";
 
 import { Card } from "../ui/card";
-import { Skill } from "@/lib/data/skills";
+import { Skill } from "@/types/skill";
 import { useGSAP } from "@gsap/react";
-import Image from "next/image";
 import { gsap } from "gsap";
+import svg from "../../../public/expo-icon.svg";
+import Image from "next/image";
 
-export default function SkillCard({ id, icon, name, svg, ranking }: Skill) {
-  const skillId = `skill-${id}`;
+interface SkillCardProps {
+  skill: Skill;
+  index: number;
+}
+
+export default function SkillCard({ skill, index }: SkillCardProps) {
+  const skillId = `skill-${skill.id}`;
 
   useGSAP(() => {
     gsap.fromTo(
@@ -19,7 +25,7 @@ export default function SkillCard({ id, icon, name, svg, ranking }: Skill) {
       {
         opacity: 1,
         x: 0,
-        duration: 0.5 + (id - 1) * 0.1,
+        duration: 0.5 + index * 0.1,
         delay: 0.5,
         ease: "power1.inOut",
         scrollTrigger: {
@@ -29,7 +35,7 @@ export default function SkillCard({ id, icon, name, svg, ranking }: Skill) {
         },
       }
     );
-  }, [id, skillId]);
+  }, [index, skillId]);
 
   const SkillRanking = ({ ranking }: { ranking: Skill["ranking"] }) => {
     const maxRanking = 5;
@@ -48,17 +54,17 @@ export default function SkillCard({ id, icon, name, svg, ranking }: Skill) {
             <div
               key={i}
               className={`w-1.5 h-1.5 rounded-full ${
-                i + 1 <= ranking ? "bg-white" : "bg-white/30"
+                i <= ranking ? "bg-white" : "bg-white/30"
               }`}
             />
           ))}
         </div>
-        <span className="text-sm text-white/80">
-          {rankingLabels[ranking - 1]}
-        </span>
+        <span className="text-sm text-white/80">{rankingLabels[ranking]}</span>
       </div>
     );
   };
+
+  const isDevicon = skill.icon !== "expo-icon" ? true : false;
 
   return (
     <Card
@@ -67,16 +73,22 @@ export default function SkillCard({ id, icon, name, svg, ranking }: Skill) {
     >
       <div className="flex gap-2 w-full">
         <div className="flex h-auto items-center justify-center">
-          {icon ? (
-            <i className={`${icon} text-[1.25rem]`}></i>
-          ) : svg ? (
-            <Image src={svg} alt={name} className="w-[3rem] text-[1.25rem]" />
-          ) : null}
+          {skill.icon && isDevicon ? (
+            <i className={`${skill.icon} text-[1.25rem]`}></i>
+          ) : (
+            svg && (
+              <Image
+                src={svg}
+                alt={skill.name}
+                className="w-[3rem] text-[1.25rem]"
+              />
+            )
+          )}
         </div>
-        <span className="text-sm">{name}</span>
+        <span className="text-sm">{skill.name}</span>
       </div>
       <div className="flex flex-col gap-1 mt-1">
-        <SkillRanking ranking={ranking} />
+        <SkillRanking ranking={skill.ranking} />
       </div>
     </Card>
   );
