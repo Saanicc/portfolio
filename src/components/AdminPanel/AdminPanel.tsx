@@ -16,8 +16,9 @@ import { UpdateProject } from "./Projects/UpdateProject";
 import { Skill } from "@/types/skill";
 import { deleteSkill, getSkills } from "@/lib/firebase/skills";
 import { UpdateSkill } from "./Skills/UpdateSkill";
+import { BackgroundGradient } from "../BackgroundGradient";
 
-export const AdminPanel: React.FC = () => {
+export const AdminPanel = ({ onLogout }: { onLogout: () => void }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [item, setItem] = useState<Project | Skill>();
@@ -128,82 +129,53 @@ export const AdminPanel: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col w-full h-screen max-h-screen items-center">
-      {showPopup && item && <DeletePopup item={item} />}
-      {showModal && itemType && <Modal />}
+    <div className="flex flex-col items-center justify-center">
+      <BackgroundGradient />
+      <div className="flex flex-col w-full h-screen max-h-screen items-center">
+        {showPopup && item && <DeletePopup item={item} />}
+        {showModal && itemType && <Modal />}
 
-      <div className="w-full h-screen flex flex-col items-center overflow-hidden">
-        <h1 className="text-4xl m-8 mb-16">Welcome, Admin!</h1>
-        <div className="flex w-full gap-20 justify-center overflow-auto">
-          <div>
-            <div className="flex justify-between items-center mb-4">
-              <p className="text-xl font-bold">Projects</p>
-              <Button
-                variant="secondary"
-                onClick={() => {
-                  setShowModal(true);
-                  setItemType("project");
-                }}
-              >
-                Add new project
-              </Button>
-            </div>
-            {projects.map((project) => (
-              <Card
-                key={project.id}
-                className="bg-transparent text-white border-white/30 mb-2"
-              >
-                <CardContent className="flex flex-col items-center justify-center">
-                  <CardTitle className="p-4">{project.title}</CardTitle>
-                  <div className="flex gap-1">
-                    <Button
-                      variant="secondary"
-                      onClick={() => handleUpdateClick(project, "project")}
-                    >
-                      Update
-                    </Button>
-                    <Button
-                      variant={"destructive"}
-                      onClick={() => handleDeleteClick(project)}
-                    >
-                      Delete
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+        <div className="w-full h-screen flex flex-col items-center overflow-hidden">
+          <h1 className="text-4xl m-8 mb-16">Welcome, Admin!</h1>
+          <div className="absolute right-5 top-5 border-2 border-accent rounded-xl">
+            <button
+              onClick={onLogout}
+              className="bg-transparent hover:bg-accent text-white px-4 py-2 rounded-lg text-sm font-medium"
+            >
+              Logout
+            </button>
           </div>
-          <div className="flex flex-col overflow-hidden">
-            <div className="flex justify-between items-center mb-4">
-              <p className="text-xl font-bold">Skills</p>
-              <Button
-                variant="secondary"
-                onClick={() => {
-                  setShowModal(true);
-                  setItemType("skill");
-                }}
-              >
-                Add new skill
-              </Button>
-            </div>
-            <div className="overflow-scroll">
-              {skills.map((skill) => (
+          <div className="flex w-full gap-20 justify-center overflow-auto">
+            <div>
+              <div className="flex justify-between items-center mb-4">
+                <p className="text-xl font-bold">Projects</p>
+                <Button
+                  variant="secondary"
+                  onClick={() => {
+                    setShowModal(true);
+                    setItemType("project");
+                  }}
+                >
+                  Add new project
+                </Button>
+              </div>
+              {projects.map((project) => (
                 <Card
-                  key={skill.id}
+                  key={project.id}
                   className="bg-transparent text-white border-white/30 mb-2"
                 >
                   <CardContent className="flex flex-col items-center justify-center">
-                    <CardTitle className="p-4">{skill.name}</CardTitle>
+                    <CardTitle className="p-4">{project.title}</CardTitle>
                     <div className="flex gap-1">
                       <Button
                         variant="secondary"
-                        onClick={() => handleUpdateClick(skill, "skill")}
+                        onClick={() => handleUpdateClick(project, "project")}
                       >
                         Update
                       </Button>
                       <Button
                         variant={"destructive"}
-                        onClick={() => handleDeleteClick(skill)}
+                        onClick={() => handleDeleteClick(project)}
                       >
                         Delete
                       </Button>
@@ -211,6 +183,46 @@ export const AdminPanel: React.FC = () => {
                   </CardContent>
                 </Card>
               ))}
+            </div>
+            <div className="flex flex-col overflow-hidden">
+              <div className="flex justify-between items-center mb-4">
+                <p className="text-xl font-bold">Skills</p>
+                <Button
+                  variant="secondary"
+                  onClick={() => {
+                    setShowModal(true);
+                    setItemType("skill");
+                  }}
+                >
+                  Add new skill
+                </Button>
+              </div>
+              <div className="overflow-scroll">
+                {skills.map((skill) => (
+                  <Card
+                    key={skill.id}
+                    className="bg-transparent text-white border-white/30 mb-2"
+                  >
+                    <CardContent className="flex flex-col items-center justify-center">
+                      <CardTitle className="p-4">{skill.name}</CardTitle>
+                      <div className="flex gap-1">
+                        <Button
+                          variant="secondary"
+                          onClick={() => handleUpdateClick(skill, "skill")}
+                        >
+                          Update
+                        </Button>
+                        <Button
+                          variant={"destructive"}
+                          onClick={() => handleDeleteClick(skill)}
+                        >
+                          Delete
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
             </div>
           </div>
         </div>

@@ -12,6 +12,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import TimelineTree from "@/components/Timeline/TimelineTree";
 import Footer from "@/components/Footer";
+import { BackgroundGradient } from "@/components/BackgroundGradient";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -106,8 +107,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="fixed min-h-dvh inset-0 -z-10 w-full items-center [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,hsl(var(--accent))_100%)]"></div>
-
+      <BackgroundGradient />
       <Nav />
       <main className="flex flex-col items-center overflow-hidden">
         <div className="flex flex-col items-center justify-center px-5 md:max-w-4xl lg:max-w-screen-xl">
