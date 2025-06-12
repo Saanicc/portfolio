@@ -9,6 +9,7 @@ import { Skill } from "@/types/skill";
 import { Job } from "@/types/jobs";
 import { BackgroundGradient } from "../BackgroundGradient";
 import ItemsContainer from "./ItemsContainer";
+import { Button } from "../ui/button";
 
 export const AdminPanel = ({ onLogout }: { onLogout: () => void }) => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -73,15 +74,14 @@ export const AdminPanel = ({ onLogout }: { onLogout: () => void }) => {
       <div className="flex flex-col w-full h-screen max-h-screen items-center">
         <div className="w-full h-screen flex flex-col items-center">
           <div className="w-full flex justify-between items-center my-8">
-            <h1 className="text-xl self-start">Welcome, Admin!</h1>
-            <div className="border-2 border-accent rounded-xl">
-              <button
-                onClick={onLogout}
-                className="bg-transparent hover:bg-accent text-white px-4 py-2 rounded-lg text-sm font-medium"
-              >
-                Logout
-              </button>
-            </div>
+            <h1 className="text-xl lg:text-3xl self-start">Welcome, Admin!</h1>
+            <Button
+              onClick={onLogout}
+              variant="outline"
+              className="hover:bg-accent hover:text-white text-white px-4 py-2 rounded-lg text-sm font-medium"
+            >
+              Logout
+            </Button>
           </div>
           <div className="flex flex-col md:flex-row w-full gap-10 flex-1 min-h-0">
             <ItemsContainer
