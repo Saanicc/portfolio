@@ -135,8 +135,6 @@ export const UpdateProject = ({
       } finally {
         setLoading(false);
       }
-
-      alert("Project added successfully!");
     } else {
       setLoading(true);
 

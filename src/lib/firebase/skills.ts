@@ -8,6 +8,8 @@ import {
   updateDoc,
   deleteDoc,
   query,
+  Unsubscribe,
+  onSnapshot,
 } from "firebase/firestore";
 import { db } from "./init";
 import { Skill } from "@/types/skill";
@@ -40,6 +42,30 @@ export const getSkills = async (): Promise<Skill[]> => {
     console.error("Error fetching projects:", error);
     return [];
   }
+};
+
+export const subscribeToSkills = (
+  callback: (skills: Skill[]) => void,
+  onError?: (error: Error) => void
+): Unsubscribe => {
+  const q = query(collection(db, SKILLS_COLLECTION));
+
+  return onSnapshot(
+    q,
+    (querySnapshot) => {
+      const skills = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Skill[];
+      callback(skills);
+    },
+    (error) => {
+      console.error("Error in skills subscription:", error);
+      if (onError) {
+        onError(error);
+      }
+    }
+  );
 };
 
 export const updateSkill = async (id: string, updates: Partial<Skill>) => {

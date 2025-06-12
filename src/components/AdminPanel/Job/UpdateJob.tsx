@@ -98,8 +98,6 @@ export const UpdateJob = ({
       } finally {
         setLoading(false);
       }
-
-      alert("Job added successfully!");
     } else {
       setLoading(true);
 

@@ -53,10 +53,8 @@ export const UpdateSkill = ({
 
       form.reset();
       closeModal();
-
-      alert("Skill added successfully!");
     } catch (error) {
-      alert("Error updating project. Check console for details.");
+      alert("Error updating skill. Check console for details.");
       console.error("Error:", error);
     } finally {
       setLoading(false);

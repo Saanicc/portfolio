@@ -9,6 +9,8 @@ import {
   deleteDoc,
   orderBy,
   query,
+  Unsubscribe,
+  onSnapshot,
 } from "firebase/firestore";
 import { db } from "./init";
 import { Job } from "@/types/jobs";
@@ -45,6 +47,33 @@ export const getJobs = async (): Promise<Job[]> => {
     console.error("Error fetching jobs:", error);
     return [];
   }
+};
+
+export const subscribeToJobs = (
+  callback: (jobs: Job[]) => void,
+  onError?: (error: Error) => void
+): Unsubscribe => {
+  const q = query(
+    collection(db, JOBS_COLLECTION),
+    orderBy("createdAt", "desc")
+  );
+
+  return onSnapshot(
+    q,
+    (querySnapshot) => {
+      const jobs = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Job[];
+      callback(jobs);
+    },
+    (error) => {
+      console.error("Error in jobs subscription:", error);
+      if (onError) {
+        onError(error);
+      }
+    }
+  );
 };
 
 export const updateJob = async (id: string, updates: Partial<Job>) => {

@@ -1,32 +1,70 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getProjects } from "@/lib/firebase/projects";
+import { subscribeToProjects } from "@/lib/firebase/projects";
+import { subscribeToSkills } from "@/lib/firebase/skills";
+import { subscribeToJobs } from "@/lib/firebase/jobs";
 import { Project } from "@/types/project";
 import { Skill } from "@/types/skill";
-import { getSkills } from "@/lib/firebase/skills";
+import { Job } from "@/types/jobs";
 import { BackgroundGradient } from "../BackgroundGradient";
 import ItemsContainer from "./ItemsContainer";
-import { Job } from "@/types/jobs";
-import { getJobs } from "@/lib/firebase/jobs";
 
 export const AdminPanel = ({ onLogout }: { onLogout: () => void }) => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [skills, setSkills] = useState<Skill[]>([]);
   const [jobs, setJobs] = useState<Job[]>([]);
 
+  const [loadingProjects, setLoadingProjects] = useState(true);
+  const [loadingSkills, setLoadingSkills] = useState(true);
+  const [loadingJobs, setLoadingJobs] = useState(true);
+  const [projectsError, setProjectsError] = useState<string | null>(null);
+  const [skillsError, setSkillsError] = useState<string | null>(null);
+  const [jobsError, setJobsError] = useState<string | null>(null);
+
   useEffect(() => {
-    const fetchData = async () => {
-      const projectsData = await getProjects();
-      const skillsData = await getSkills();
-      const jobsData = await getJobs();
+    const unsubscribe = subscribeToProjects(
+      (updatedProjects) => {
+        setProjects(updatedProjects);
+        setLoadingProjects(false);
+      },
+      (err) => {
+        setProjectsError(err.message);
+        setLoadingProjects(false);
+      }
+    );
 
-      setProjects(projectsData);
-      setSkills(skillsData);
-      setJobs(jobsData);
-    };
+    return () => unsubscribe();
+  }, []);
 
-    fetchData();
+  useEffect(() => {
+    const unsubscribe = subscribeToSkills(
+      (updatedSkills) => {
+        setSkills(updatedSkills);
+        setLoadingSkills(false);
+      },
+      (err) => {
+        setSkillsError(err.message);
+        setLoadingSkills(false);
+      }
+    );
+
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    const unsubscribe = subscribeToJobs(
+      (updatedJobs) => {
+        setJobs(updatedJobs);
+        setLoadingJobs(false);
+      },
+      (err) => {
+        setJobsError(err.message);
+        setLoadingJobs(false);
+      }
+    );
+
+    return () => unsubscribe();
   }, []);
 
   return (
@@ -46,9 +84,24 @@ export const AdminPanel = ({ onLogout }: { onLogout: () => void }) => {
             </div>
           </div>
           <div className="flex flex-col md:flex-row w-full gap-10 flex-1 min-h-0">
-            <ItemsContainer itemType="project" items={projects} />
-            <ItemsContainer itemType="skill" items={skills} />
-            <ItemsContainer itemType="job" items={jobs} />
+            <ItemsContainer
+              itemType="project"
+              items={projects}
+              loading={loadingProjects}
+              error={projectsError}
+            />
+            <ItemsContainer
+              itemType="skill"
+              items={skills}
+              loading={loadingSkills}
+              error={skillsError}
+            />
+            <ItemsContainer
+              itemType="job"
+              items={jobs}
+              loading={loadingJobs}
+              error={jobsError}
+            />
           </div>
         </div>
       </div>

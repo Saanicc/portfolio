@@ -9,6 +9,8 @@ import {
   deleteDoc,
   orderBy,
   query,
+  Unsubscribe,
+  onSnapshot,
 } from "firebase/firestore";
 import { db } from "./init";
 import { Project } from "@/types/project";
@@ -45,6 +47,33 @@ export const getProjects = async (): Promise<Project[]> => {
     console.error("Error fetching projects:", error);
     return [];
   }
+};
+
+export const subscribeToProjects = (
+  callback: (projects: Project[]) => void,
+  onError?: (error: Error) => void
+): Unsubscribe => {
+  const q = query(
+    collection(db, PROJECTS_COLLECTION),
+    orderBy("createdAt", "desc")
+  );
+
+  return onSnapshot(
+    q,
+    (querySnapshot) => {
+      const projects = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Project[];
+      callback(projects);
+    },
+    (error) => {
+      console.error("Error in projects subscription:", error);
+      if (onError) {
+        onError(error);
+      }
+    }
+  );
 };
 
 export const updateProject = async (id: string, updates: Partial<Project>) => {

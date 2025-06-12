@@ -37,9 +37,13 @@ const isSkill = (item: DataType): item is Skill => {
 const ItemsContainer = ({
   itemType,
   items,
+  loading,
+  error,
 }: {
   itemType: ItemType;
   items: DataType[];
+  loading: boolean;
+  error: string | null;
 }) => {
   const [showPopup, setShowPopup] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -166,6 +170,8 @@ const ItemsContainer = ({
         </Button>
       </div>
       <div className="w-full flex flex-col gap-1 overflow-y-auto flex-1">
+        {loading && <div className="self-center">Loading {itemType}s...</div>}
+        {error && <div>{error}</div>}
         {items.map((item) => (
           <Card
             key={item.id}
