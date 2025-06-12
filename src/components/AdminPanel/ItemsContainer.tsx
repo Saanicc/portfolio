@@ -76,8 +76,8 @@ const ItemsContainer = ({
     const popupTitle = isProject(item) ? "Delete project" : "Delete skill";
 
     return (
-      <div className="flex items-center justify-center w-screen h-screen bg-black/50 absolute">
-        <Card>
+      <div className="flex items-center justify-center w-screen px-4 h-screen bg-black/50 absolute inset-0">
+        <Card className="w-full sm:w-96">
           <CardHeader className="p-[20px] pb-3">
             <CardTitle>{popupTitle}</CardTitle>
           </CardHeader>
