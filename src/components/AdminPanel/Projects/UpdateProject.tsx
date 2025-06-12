@@ -20,6 +20,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { storage } from "@/lib/firebase/init";
 import { getDownloadURL, ref, uploadBytes } from "@firebase/storage";
 import { Project } from "@/types/project";
+import Image from "next/image";
 
 const formSchema = z.object({
   title: z.string().min(2, "Title must be at least 2 characters."),
@@ -270,9 +271,11 @@ export const UpdateProject = ({
                     <p className="text-sm font-medium">Preview:</p>
                     <div className="relative w-[50%]">
                       {/* eslint-disable-next-line @next/next/no-img-element*/}
-                      <img
+                      <Image
                         src={imagePreview}
                         alt="Preview"
+                        width={400}
+                        height={0}
                         className="w-full h-auto object-cover rounded-lg border"
                       />
                       <Button
