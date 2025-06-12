@@ -1,11 +1,10 @@
-import { TimelineItem } from "@/lib/data/work";
 import { useEffect } from "react";
 import { gsap } from "gsap";
 import { Card, CardHeader } from "@/components/ui/card";
-import SingleProject from "./SingleProject";
-import MultipleProjects from "./MultipleProjects";
+import { Job } from "@/types/jobs";
+import TimelineItem from "./TimelineItem";
 
-const TimelineCard: React.FC<{ item: TimelineItem; isLeft: boolean }> = ({
+const TimelineCard: React.FC<{ item: Job; isLeft: boolean }> = ({
   item,
   isLeft,
 }) => {
@@ -49,8 +48,7 @@ const TimelineCard: React.FC<{ item: TimelineItem; isLeft: boolean }> = ({
             <h4 className="text-lg text-white font-medium">{item.company}</h4>
             <p className="text-gray-300 text-sm mt-1">{item.date}</p>
           </CardHeader>
-          {item.project && <SingleProject project={item.project} />}
-          {item.projects && <MultipleProjects projects={item.projects} />}
+          <TimelineItem items={item.projects} />
         </Card>
       </div>
     </div>

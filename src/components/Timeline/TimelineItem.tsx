@@ -1,21 +1,21 @@
-import { TimelineItem } from "@/lib/data/work";
-import BulletPointDetails from "./BulletPointDetails";
 import { CardContent } from "../ui/card";
+import { Job } from "@/types/jobs";
+import Markdown from "react-markdown";
 
-const MultipleProjects = ({
-  projects,
-}: {
-  projects: TimelineItem["projects"];
-}) => {
-  if (!projects) return null;
+const TimelineItem = ({ items }: { items: Job["projects"] }) => {
+  if (!items) return null;
 
   return (
     <CardContent className="flex-grow">
-      {projects.map((project, index) => (
+      {items.map((project, index) => (
         <div key={project.title} className={`${index % 2 !== 0 ? "mt-4" : ""}`}>
           <h5 className="text-md text-white font-semibold">{project.title}</h5>
-          <p className="text-gray-300 text-sm pb-1">{project.summary}</p>
-          <BulletPointDetails bulletPoints={project.bulletPointDetails} />
+          <div className="text-gray-300 text-sm pb-1">
+            <Markdown>{project.summary}</Markdown>
+          </div>
+          <div className="text-gray-300 text-sm">
+            <Markdown>{project.details}</Markdown>
+          </div>
           <div className="flex flex-wrap gap-2 mt-4">
             {project.tags.map((tag) => (
               <span
@@ -32,4 +32,4 @@ const MultipleProjects = ({
   );
 };
 
-export default MultipleProjects;
+export default TimelineItem;
