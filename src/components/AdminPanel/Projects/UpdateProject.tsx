@@ -270,7 +270,6 @@ export const UpdateProject = ({
                   <div className="space-y-2">
                     <p className="text-sm font-medium">Preview:</p>
                     <div className="relative w-[50%]">
-                      {/* eslint-disable-next-line @next/next/no-img-element*/}
                       <Image
                         src={imagePreview}
                         alt="Preview"
