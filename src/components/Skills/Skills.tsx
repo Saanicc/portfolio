@@ -1,8 +1,21 @@
 import SkillCard from "./SkillCard";
-import { skills } from "@/lib/data/skills";
 import { Card, CardContent, CardHeader } from "../ui/card";
+import { getSkills } from "@/lib/firebase/skills";
+import { Skill } from "@/types/skill";
+import { useEffect, useState } from "react";
 
 export default function Skills() {
+  const [skills, setSkills] = useState<Skill[]>([]);
+
+  useEffect(() => {
+    const fetchSkills = async () => {
+      const data = await getSkills();
+      setSkills(data);
+    };
+
+    fetchSkills();
+  }, []);
+
   return (
     <section id="skills" className="w-full">
       <Card className="h-full flex flex-col bg-black/20 border-white/20">
@@ -10,8 +23,8 @@ export default function Skills() {
           <h2 className="text-2xl font-bold text-white">Skills</h2>
         </CardHeader>
         <CardContent className="flex flex-wrap gap-2">
-          {skills.map((skill) => (
-            <SkillCard key={skill.id} {...skill} />
+          {skills.map((skill, index) => (
+            <SkillCard key={skill.id} skill={skill} index={index} />
           ))}
         </CardContent>
       </Card>

@@ -1,12 +1,25 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { Card, CardContent, CardHeader } from "../ui/card";
-import { timelineData } from "@/lib/data/work";
+import { Job } from "@/types/jobs";
 import TimelineCard from "./TimelineCard";
+import { useEffect, useState } from "react";
+import { getJobs } from "@/lib/firebase/jobs";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const TimelineTree = () => {
+  const [jobs, setJobs] = useState<Job[]>([]);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      const data = await getJobs();
+      setJobs(data);
+    };
+
+    fetchJobs();
+  }, []);
+
   return (
     <section id="work" className="my-10">
       <Card className="w-full flex flex-col bg-black/20 border-white/20 relative">
@@ -16,7 +29,7 @@ const TimelineTree = () => {
         </CardHeader>
         <CardContent className="px-6">
           <div className="flex flex-col gap-6">
-            {timelineData.map((item, index) => (
+            {jobs.map((item, index) => (
               <TimelineCard
                 key={item.id}
                 item={item}

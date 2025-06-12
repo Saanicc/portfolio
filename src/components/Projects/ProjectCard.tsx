@@ -4,18 +4,58 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-import { Project } from "@/lib/data/projects";
+import { Project } from "@/types/project";
 import Link from "next/link";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import Image from "next/image";
 import { ExternalLink } from "lucide-react";
+import { useState } from "react";
 
 interface ProjectCardProps {
   project: Project;
+  index: number;
 }
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+const ImageWithSkeleton = ({ src, alt }: { src: string; alt: string }) => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  const LoadingSpinner = ({ size = 40 }) => (
+    <div className="flex items-center justify-center">
+      <div
+        className="animate-spin rounded-full border-4 border-gray-300 border-t-blue-500"
+        style={{ width: size, height: size }}
+      />
+    </div>
+  );
+
+  return (
+    <div className="w-full h-fit relative overflow-hidden rounded-lg mb-4 border border-white/40">
+      {isLoading && (
+        <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
+          <div className="text-center">
+            <LoadingSpinner size={32} />
+            <p className="text-sm text-gray-500 mt-2">Loading image...</p>
+          </div>
+        </div>
+      )}
+      <Image
+        src={src}
+        alt={alt}
+        width={400}
+        height={0}
+        onLoad={() => setIsLoading(false)}
+        onError={() => setIsLoading(false)}
+        className={`w-full h-auto object-contain transition-all duration-500 ${
+          isLoading ? "opacity-0 scale-110" : "opacity-100 scale-100"
+        }`}
+        priority
+      />
+    </div>
+  );
+};
+
+export default function ProjectCard({ project, index }: ProjectCardProps) {
   const id = `project-${project.id}`;
 
   useGSAP(() => {
@@ -29,7 +69,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         opacity: 1,
         y: 0,
         duration: 0.5,
-        delay: 0.25 + (project.id - 1) * 0.25,
+        delay: 0.25 + index * 0.25,
         ease: "power1.inOut",
         scrollTrigger: {
           trigger: `#${id}`,
@@ -50,12 +90,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <h3 className="text-xl font-semibold text-white">{project.title}</h3>
       </CardHeader>
       <CardContent className="flex-grow">
-        {project.image && (
-          <Image
-            src={project.image}
-            alt={project.title}
-            className="w-auto h-auto aspect-auto mb-4"
-          />
+        {project.imageUrl && (
+          <ImageWithSkeleton src={project.imageUrl} alt={project.title} />
         )}
         <p className="text-gray-300 text-sm">{project.description}</p>
         {project.technologies && (
@@ -72,9 +108,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         )}
       </CardContent>
       <CardFooter className="flex flex-col items-start">
-        {project.github && (
+        {project.githubUrl && (
           <Link
-            href={project.github}
+            href={project.githubUrl}
             target="_blank"
             className="text-gray-300 hover:text-white transition-colors flex items-center gap-2"
           >
