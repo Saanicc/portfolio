@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "../ui/card";
 import { Button } from "../ui/button";
-import { Edit, Trash } from "lucide-react";
+import { Edit, Plus, Trash } from "lucide-react";
 import { UpdateProject } from "./Projects/UpdateProject";
 import { UpdateSkill } from "./Skills/UpdateSkill";
 import { useState } from "react";
@@ -154,30 +154,32 @@ const ItemsContainer = ({
     itemType === "project" ? "Project" : itemType === "job" ? "Job" : "Skill";
 
   return (
-    <div className="w-full flex flex-col h-full min-h-0">
+    <div className="w-full flex flex-col h-full min-h-0 border rounded-lg border-white/30">
       {showPopup && item && <DeletePopup item={item} />}
       {showModal && type && <Modal />}
-      <div className="flex justify-between items-center mb-4 flex-shrink-0">
+      <div className="flex justify-between items-center flex-shrink-0 p-4 border-b-[1px] border-white/30">
         <p className="text-xl font-bold">{title}s</p>
         <Button
-          variant="secondary"
+          variant="outline"
           onClick={() => {
             setShowModal(true);
             setType(itemType);
           }}
+          className="bg-transparent hover:text-white"
         >
-          Add new {title}
+          Add {title}
+          <Plus />
         </Button>
       </div>
-      <div className="w-full flex flex-col gap-1 overflow-y-auto flex-1">
+      <div className="w-full flex flex-col overflow-y-auto flex-1">
         {loading && <div className="self-center">Loading {itemType}s...</div>}
         {error && <div>{error}</div>}
         {items.map((item) => (
           <Card
             key={item.id}
-            className="bg-transparent text-white border-white/30"
+            className="bg-transparent text-white border-x-0 border-t-0 border-white/30 rounded-none"
           >
-            <CardContent className="flex flex-row items-center justify-between px-4 py-4">
+            <CardContent className="flex flex-row items-center justify-between p-4">
               <CardTitle>
                 {isProject(item)
                   ? item.title
@@ -185,10 +187,11 @@ const ItemsContainer = ({
                   ? item.title
                   : item.name}
               </CardTitle>
-              <div className="flex gap-2">
+              <div className="flex gap-2 border-l-[1px] border-white/30">
                 <Button
                   variant="secondary"
                   onClick={() => handleUpdateClick(item, itemType)}
+                  className="ml-3"
                 >
                   <Edit />
                 </Button>

@@ -10,6 +10,8 @@ import { Job } from "@/types/jobs";
 import { BackgroundGradient } from "../BackgroundGradient";
 import ItemsContainer from "./ItemsContainer";
 import { Button } from "../ui/button";
+import { LogOut } from "lucide-react";
+import AboutMe from "./AboutMe/AboutMe";
 
 export const AdminPanel = ({ onLogout }: { onLogout: () => void }) => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -80,10 +82,12 @@ export const AdminPanel = ({ onLogout }: { onLogout: () => void }) => {
               variant="outline"
               className="hover:bg-accent hover:text-white text-white px-4 py-2 rounded-lg text-sm font-medium"
             >
+              <LogOut />
               Logout
             </Button>
           </div>
-          <div className="flex flex-col md:flex-row w-full gap-10 flex-1 min-h-0">
+          <div className="flex flex-col md:flex-row w-full gap-4 flex-1 min-h-0 pb-4">
+            <AboutMe />
             <ItemsContainer
               itemType="project"
               items={projects}

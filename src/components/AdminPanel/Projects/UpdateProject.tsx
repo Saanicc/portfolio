@@ -31,7 +31,7 @@ const formSchema = z.object({
     .array(z.string())
     .min(1, "At least one technology is required"),
   githubUrl: z.string().url("Please enter a valid GitHub URL").optional(),
-  liveUrl: z.string().url("Please enter a valid live URL"),
+  liveUrl: z.string().optional(),
 });
 
 export const UpdateProject = ({
