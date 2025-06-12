@@ -195,7 +195,7 @@ export const UpdateProject = ({
   };
 
   return (
-    <Card className="relative w-1/2 h-[80%] overflow-auto bg-black mt-10 mb-10 border border-white/20">
+    <Card className="mx-4 w-full md:max-w-[80%] xl:max-w-[60%] h-auto max-h-[90%] overflow-auto bg-black mt-10 mb-10 border border-white/20">
       <CardHeader>
         <h2 className="text-2xl font-bold text-white">
           {defaultData ? "Update project" : "Add New Project"}
@@ -337,7 +337,7 @@ export const UpdateProject = ({
                         {form.watch("technologies").map((tech) => (
                           <div
                             key={tech}
-                            className="px-3 py-1 outline outline-white/30 text-primary-foreground rounded-md flex items-center gap-2 text-sm"
+                            className="px-3 py-1 outline outline-1 outline-white/30 text-primary-foreground rounded-md flex items-center gap-2 text-sm"
                           >
                             {tech}
                             <button

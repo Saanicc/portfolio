@@ -58,7 +58,7 @@ const ItemsContainer = ({
       );
     } else if (itemType === "skill") {
       return (
-        <div className="flex absolute inset-0 w-full h-screen items-center justify-center bg-black/60">
+        <div className="flex absolute inset-0 w-screen h-screen items-center justify-center bg-black/60">
           <UpdateSkill defaultData={item as Skill} closeModal={closeModal} />
         </div>
       );

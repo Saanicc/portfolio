@@ -72,7 +72,7 @@ export const UpdateSkill = ({
   ];
 
   return (
-    <Card className="absolute w-1/3 h-auto overflow-auto bg-black mt-10 mb-10 border border-white/20">
+    <Card className="mx-4 w-full md:w-96 h-auto max-h-[90%] overflow-auto bg-black border border-white/20">
       <CardHeader>
         <h2 className="text-2xl font-bold text-white">
           {defaultData ? "Update skill" : "Add new skill"}
