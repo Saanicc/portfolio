@@ -7,18 +7,23 @@ import { Skill } from "@/types/skill";
 import { getSkills } from "@/lib/firebase/skills";
 import { BackgroundGradient } from "../BackgroundGradient";
 import ItemsContainer from "./ItemsContainer";
+import { Job } from "@/types/jobs";
+import { getJobs } from "@/lib/firebase/jobs";
 
 export const AdminPanel = ({ onLogout }: { onLogout: () => void }) => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [skills, setSkills] = useState<Skill[]>([]);
+  const [jobs, setJobs] = useState<Job[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const projectsData = await getProjects();
       const skillsData = await getSkills();
+      const jobsData = await getJobs();
 
       setProjects(projectsData);
       setSkills(skillsData);
+      setJobs(jobsData);
     };
 
     fetchData();
@@ -43,6 +48,7 @@ export const AdminPanel = ({ onLogout }: { onLogout: () => void }) => {
           <div className="flex flex-col md:flex-row w-full gap-10 flex-1 min-h-0">
             <ItemsContainer itemType="project" items={projects} />
             <ItemsContainer itemType="skill" items={skills} />
+            <ItemsContainer itemType="job" items={jobs} />
           </div>
         </div>
       </div>
