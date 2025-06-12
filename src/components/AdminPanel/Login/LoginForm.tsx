@@ -60,7 +60,7 @@ const LoginForm = ({ onLogin }: { onLogin: () => void }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="min-h-screen flex items-center justify-center px-4 md:px-0">
       <BackgroundGradient />
       <div className="max-w-md w-full space-y-8">
         <div>
