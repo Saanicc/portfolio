@@ -6,7 +6,7 @@ const TimelineItem = ({ items }: { items: Job["projects"] }) => {
   if (!items) return null;
 
   return (
-    <CardContent className="flex-grow">
+    <CardContent className="flex-grow p-4 pt-0">
       {items.map((project, index) => (
         <div key={project.title} className={`${index % 2 !== 0 ? "mt-4" : ""}`}>
           <h5 className="text-md text-white font-semibold">{project.title}</h5>

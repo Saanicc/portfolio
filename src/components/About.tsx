@@ -18,10 +18,10 @@ const About = () => {
   return (
     <section id="about-info" className="w-full min-h-full">
       <Card className="flex flex-col bg-black/20 border-white/20 h-full">
-        <CardHeader>
+        <CardHeader className="p-4">
           <h2 className="text-2xl font-bold text-white">About Me</h2>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-4 pt-0">
           <div className="text-gray-300 space-y-4">
             <Markdown>{about?.description}</Markdown>
           </div>

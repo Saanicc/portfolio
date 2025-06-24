@@ -3,9 +3,10 @@ import { ChevronDown } from "lucide-react";
 import { gsap } from "gsap";
 import { useEffect, useState, useRef } from "react";
 import { useGSAP } from "@gsap/react";
-import { scrollToSection } from "@/lib/utils";
+import { useScrollTo } from "@/hooks/useScrollTo";
 
 export default function Hero() {
+  const { scrollToSection } = useScrollTo();
   const [isVisible, setIsVisible] = useState(true);
   const [displayText, setDisplayText] = useState("");
   const phraseIndex = useRef(0);

@@ -30,7 +30,7 @@ const ImageWithSkeleton = ({ src, alt }: { src: string; alt: string }) => {
   );
 
   return (
-    <div className="w-full h-fit relative overflow-hidden rounded-lg mb-4 border border-white/40">
+    <div className="w-full h-fit relative overflow-hidden rounded-lg mb-4 border border-white/20">
       {isLoading && (
         <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
           <div className="text-center">
@@ -84,12 +84,12 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
   return (
     <Card
       id={id}
-      className="flex-1 min-w-[300px] bg-transparent border-white/20 flex flex-col"
+      className="flex-1 min-w-[260px] bg-transparent border-white/20 flex flex-col"
     >
-      <CardHeader>
+      <CardHeader className="p-4">
         <h3 className="text-xl font-semibold text-white">{project.title}</h3>
       </CardHeader>
-      <CardContent className="flex-grow">
+      <CardContent className="flex-grow p-4 pt-0">
         {project.imageUrl && (
           <ImageWithSkeleton src={project.imageUrl} alt={project.title} />
         )}
@@ -107,7 +107,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           </div>
         )}
       </CardContent>
-      <CardFooter className="flex flex-col items-start">
+      <CardFooter className="flex flex-col items-start p-4">
         {project.githubUrl && (
           <Link
             href={project.githubUrl}
@@ -133,7 +133,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             target="_blank"
             className="text-gray-300 hover:text-white transition-colors flex items-center gap-2"
           >
-            <ExternalLink size={16} />
+            <ExternalLink size={18} className="text-white" />
             <span>Visit website</span>
           </Link>
         )}

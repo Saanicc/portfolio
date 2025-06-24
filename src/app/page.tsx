@@ -20,11 +20,9 @@ export default function Home() {
   useGSAP(() => {
     gsap.fromTo(
       "#about-info",
-      { opacity: 0, x: -100, scale: 1.1 },
+      { opacity: 0 },
       {
         opacity: 1,
-        x: 0,
-        scale: 1,
         duration: 0.5,
         delay: 0.25,
         ease: "power1.inOut",
@@ -39,11 +37,9 @@ export default function Home() {
 
     gsap.fromTo(
       "#skills",
-      { opacity: 0, x: 100, scale: 1.1 },
+      { opacity: 0 },
       {
         opacity: 1,
-        x: 0,
-        scale: 1,
         duration: 0.5,
         delay: 0.25,
         ease: "power1.inOut",
@@ -110,11 +106,11 @@ export default function Home() {
       <BackgroundGradient />
       <Nav />
       <main className="flex flex-col items-center overflow-hidden">
-        <div className="flex flex-col items-center justify-center px-5 md:max-w-4xl lg:max-w-screen-xl">
+        <div className="flex flex-col items-center justify-center px-4 md:max-w-4xl lg:max-w-screen-xl gap-20">
           <Hero />
           <section
             id="about"
-            className="flex flex-col sm:flex-row w-full my-20 md:px-0 gap-4 h-auto"
+            className="flex flex-col sm:flex-row w-full min-w-full md:px-0 gap-4 h-auto min-h-96"
           >
             <About />
             <Skills />

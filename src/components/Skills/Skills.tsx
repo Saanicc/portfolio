@@ -17,12 +17,12 @@ export default function Skills() {
   }, []);
 
   return (
-    <section id="skills" className="w-full">
+    <section id="skills" className="w-full min-h-full">
       <Card className="h-full flex flex-col bg-black/20 border-white/20">
-        <CardHeader>
+        <CardHeader className="p-4">
           <h2 className="text-2xl font-bold text-white">Skills</h2>
         </CardHeader>
-        <CardContent className="flex flex-wrap gap-2">
+        <CardContent className="flex flex-wrap gap-2 p-4 pt-0">
           {skills.map((skill, index) => (
             <SkillCard key={skill.id} skill={skill} index={index} />
           ))}

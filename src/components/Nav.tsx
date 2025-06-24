@@ -2,10 +2,11 @@ import { useState, useEffect } from "react";
 import { navigation } from "@/app/navigation";
 import Link from "next/link";
 import { House } from "lucide-react";
-import { scrollToSection } from "@/lib/utils";
+import { useScrollTo } from "@/hooks/useScrollTo";
 
 const Nav = () => {
   const [activeSection, setActiveSection] = useState<string>("home");
+  const { scrollToSection } = useScrollTo();
 
   useEffect(() => {
     const handleScroll = () => {

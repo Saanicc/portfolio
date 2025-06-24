@@ -77,12 +77,12 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="w-full max-w-2xl mt-10 mb-20">
-      <Card className="flex flex-col w-full pb-6 bg-black/20 border-white/20">
-        <CardHeader>
+    <section id="contact" className="w-full max-w-2xl mb-20">
+      <Card className="flex flex-col w-full bg-black/20 border-white/20">
+        <CardHeader className="p-4">
           <h2 className="text-2xl font-bold text-white">Get in touch</h2>
         </CardHeader>
-        <CardContent className="pb-0 text-white">
+        <CardContent className="p-4 pt-0 text-white">
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
@@ -148,7 +148,12 @@ const Contact: React.FC = () => {
                 )}
               />
 
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
+              <Button
+                type="submit"
+                variant="outline"
+                className="w-full bg-transparent hover:text-white"
+                disabled={isSubmitting}
+              >
                 {isSubmitting ? "Sending..." : "Send Message"}
               </Button>
             </form>

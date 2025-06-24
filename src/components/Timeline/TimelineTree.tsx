@@ -21,14 +21,14 @@ const TimelineTree = () => {
   }, []);
 
   return (
-    <section id="work" className="my-10">
+    <section id="work" className="min-w-full min-h-96">
       <Card className="w-full flex flex-col bg-black/20 border-white/20 relative">
         <div className="absolute left-1/2 transform -translate-x-1/2 w-[1px] bottom-0 h-full bg-[#ffffff50] hidden md:block"></div>
-        <CardHeader>
+        <CardHeader className="p-4">
           <h2 className="text-2xl font-bold text-white">Work experience</h2>
         </CardHeader>
-        <CardContent className="px-6">
-          <div className="flex flex-col gap-6">
+        <CardContent className="p-4 pt-0">
+          <div className="flex flex-col gap-4">
             {jobs.map((item, index) => (
               <TimelineCard
                 key={item.id}
