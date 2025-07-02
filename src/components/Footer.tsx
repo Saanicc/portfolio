@@ -6,7 +6,7 @@ const Footer = () => {
     >
       <div className="flex justify-center space-x-4 mb-4">
         <a
-          href="https://www.linkedin.com/in/mattias-ahlstr%C3%B6m-10b180180/"
+          href="https://www.linkedin.com/in/mattias-ahlstrom"
           target="_blank"
           rel="noopener noreferrer"
           className="text-xl text-white/70 hover:text-white transition-colors devicon-linkedin-plain"
