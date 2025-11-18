@@ -49,19 +49,20 @@ export default function Projects() {
               onClick={() => setShowImageModal(false)}
             />
           </CardHeader>
-          <CardContent className="flex justify-center items-center h-auto">
-            <div className="">
+          <CardContent className="flex flex-col gap-4 justify-center items-center h-auto">
+            {selectedProject?.imageUrls?.map((image, index) => (
               <Image
-                src={selectedProject?.imageUrl ?? ""}
+                key={index}
+                src={image ?? ""}
                 alt={`Image showcasing the ${selectedProject?.title} project`}
-                width={isMobile ? 400 : 1000}
+                width={isMobile ? 400 : 900}
                 height={0}
                 className={
                   "flex flex-1 object-cover transition-all duration-500 border-white/20 border rounded-lg"
                 }
                 priority
               />
-            </div>
+            ))}
           </CardContent>
         </Card>
       </div>

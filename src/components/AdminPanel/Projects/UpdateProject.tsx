@@ -44,9 +44,9 @@ export const UpdateProject = ({
   const [techInput, setTechInput] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string>(
-    defaultData?.imageUrl ? defaultData.imageUrl : ""
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [imagePreviews, setImagePreviews] = useState<(string | null)[]>(
+    defaultData?.imageUrls ? defaultData.imageUrls : [null]
   );
   const [uploadProgress, setUploadProgress] = useState<string>("");
 
@@ -62,53 +62,66 @@ export const UpdateProject = ({
   });
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      if (!file.type.startsWith("image/")) {
-        alert("Please select an image file");
-        return;
+    const files = e.target.files;
+
+    if (!files) {
+      alert("No files could be loaded");
+      return;
+    }
+
+    for (const file of files) {
+      if (file) {
+        if (!file.type.startsWith("image/")) {
+          alert("Please select an image file");
+          return;
+        }
+
+        if (file.size > 5 * 1024 * 1024) {
+          alert("Image must be less than 5MB");
+          return;
+        }
+
+        setImageFiles((prev) => [...prev, file]);
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          setImagePreviews((prev) => [...prev, e.target?.result as string]);
+        };
+        reader.readAsDataURL(file);
       }
-
-      if (file.size > 5 * 1024 * 1024) {
-        alert("Image must be less than 5MB");
-        return;
-      }
-
-      setImageFile(file);
-
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImagePreview(e.target?.result as string);
-      };
-      reader.readAsDataURL(file);
     }
   };
 
-  const uploadImage = async (
-    file: File,
+  const uploadImages = async (
+    files: File[],
     projectTitle: string
-  ): Promise<string> => {
+  ): Promise<string[]> => {
     const timestamp = Date.now();
     const sanitizedTitle = projectTitle
       .toLowerCase()
       .replace(/[^a-z0-9]/g, "-");
-    const fileName = `projects/${sanitizedTitle}-${timestamp}.${file.name
-      .split(".")
-      .pop()}`;
 
-    const storageRef = ref(storage, fileName);
+    setUploadProgress("Uploading images...");
 
-    setUploadProgress("Uploading image...");
+    const uploadPromises = files.map(async (file) => {
+      const fileName = `projects/${sanitizedTitle}-${timestamp}.${file.name
+        .split(".")
+        .pop()}`;
+
+      const storageRef = ref(storage, fileName);
+
+      const snapshot = await uploadBytes(storageRef, file);
+      return await getDownloadURL(snapshot.ref);
+    });
 
     try {
-      const snapshot = await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(snapshot.ref);
+      const downloadURLs = await Promise.all(uploadPromises);
       setUploadProgress("");
-      return downloadURL;
+      return downloadURLs;
     } catch (error) {
       setUploadProgress("");
       console.error(error);
-      throw new Error("Failed to upload image");
+      throw new Error("Failed to upload images");
     }
   };
 
@@ -116,7 +129,7 @@ export const UpdateProject = ({
     const formData = form.getValues();
 
     if (!defaultData) {
-      if (!imageFile) {
+      if (!imageFiles) {
         alert("Please select an image for the project");
         return;
       }
@@ -124,11 +137,11 @@ export const UpdateProject = ({
       setLoading(true);
 
       try {
-        const imageUrl = await uploadImage(imageFile, formData.title);
+        const imageUrls = await uploadImages(imageFiles, formData.title);
 
         await addProject({
           ...formData,
-          imageUrl,
+          imageUrls,
         });
       } catch (error) {
         alert("Error adding project. Check console for details.");
@@ -140,16 +153,20 @@ export const UpdateProject = ({
       setLoading(true);
 
       try {
-        if (!imageFile) {
+        if (!imageFiles) {
           await updateProject(defaultData.id, {
             ...form.getValues(),
           });
         } else {
-          const imageUrl = await uploadImage(imageFile, formData.title);
+          const imageUrls = await uploadImages(imageFiles, formData.title);
+
+          const filterImages = defaultData?.imageUrls?.filter((url) =>
+            imagePreviews.includes(url)
+          );
 
           await updateProject(defaultData.id, {
             ...formData,
-            imageUrl,
+            imageUrls: [...(filterImages ?? []), ...imageUrls],
           });
         }
       } catch (error) {
@@ -161,8 +178,8 @@ export const UpdateProject = ({
     }
 
     form.reset();
-    setImageFile(null);
-    setImagePreview("");
+    setImageFiles([]);
+    setImagePreviews([null]);
     setUploadProgress("");
 
     const fileInput = document.getElementById(
@@ -254,6 +271,7 @@ export const UpdateProject = ({
                 <Input
                   id="image-upload"
                   type="file"
+                  multiple
                   accept="image/*"
                   onChange={handleImageChange}
                   className="h-auto cursor-pointer border-white/30"
@@ -266,33 +284,41 @@ export const UpdateProject = ({
                   <p className="text-sm text-blue-600">{uploadProgress}</p>
                 )}
 
-                {imagePreview && (
+                {imagePreviews && (
                   <div className="space-y-2">
-                    <p className="text-sm font-medium">Preview:</p>
-                    <div className="relative w-[50%]">
-                      <Image
-                        src={imagePreview}
-                        alt="Preview"
-                        width={400}
-                        height={0}
-                        className="w-full h-auto object-cover rounded-lg border"
-                      />
-                      <Button
-                        type="button"
-                        variant="destructive"
-                        size="sm"
-                        className="absolute top-2 right-2"
-                        onClick={() => {
-                          setImageFile(null);
-                          setImagePreview("");
-                          const fileInput = document.getElementById(
-                            "image-upload"
-                          ) as HTMLInputElement;
-                          if (fileInput) fileInput.value = "";
-                        }}
-                      >
-                        Remove
-                      </Button>
+                    <p className="text-sm font-medium">Previews:</p>
+                    <div className="flex flex-row gap-2">
+                      {imagePreviews.map((image, index) => (
+                        <div key={index} className="relative w-[20%]">
+                          <Image
+                            src={image ?? ""}
+                            alt="Preview"
+                            width={300}
+                            height={0}
+                            className="w-full h-auto object-cover rounded-lg border"
+                          />
+                          <Button
+                            type="button"
+                            variant="destructive"
+                            size="sm"
+                            className="absolute top-2 right-2"
+                            onClick={() => {
+                              setImageFiles((prev) =>
+                                prev.filter((_, i) => i !== index)
+                              );
+                              setImagePreviews((prev) =>
+                                prev.filter((_, i) => i !== index)
+                              );
+                              const fileInput = document.getElementById(
+                                "image-upload"
+                              ) as HTMLInputElement;
+                              if (fileInput) fileInput.value = "";
+                            }}
+                          >
+                            Remove
+                          </Button>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 )}

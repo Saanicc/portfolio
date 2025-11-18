@@ -95,9 +95,9 @@ export default function ProjectCard({
         <h3 className="text-xl font-semibold text-white">{project.title}</h3>
       </CardHeader>
       <CardContent className="flex-grow p-4 pt-0">
-        {project.imageUrl && (
+        {project.imageUrls && (
           <div onClick={() => onImageClick(project)}>
-            <ImageWithSkeleton src={project.imageUrl} alt={project.title} />
+            <ImageWithSkeleton src={project.imageUrls[0]} alt={project.title} />
           </div>
         )}
         <p className="text-gray-300 text-sm">{project.description}</p>
