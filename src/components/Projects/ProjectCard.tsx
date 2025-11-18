@@ -15,6 +15,7 @@ import { useState } from "react";
 interface ProjectCardProps {
   project: Project;
   index: number;
+  onImageClick: (project: Project) => void;
 }
 
 const ImageWithSkeleton = ({ src, alt }: { src: string; alt: string }) => {
@@ -30,7 +31,7 @@ const ImageWithSkeleton = ({ src, alt }: { src: string; alt: string }) => {
   );
 
   return (
-    <div className="w-full h-fit relative overflow-hidden rounded-lg mb-4 border border-white/20">
+    <div className="w-full h-fit relative overflow-hidden rounded-lg mb-4 border border-white/20 hover:border-white/40">
       {isLoading && (
         <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
           <div className="text-center">
@@ -48,14 +49,18 @@ const ImageWithSkeleton = ({ src, alt }: { src: string; alt: string }) => {
         onError={() => setIsLoading(false)}
         className={`w-full h-auto object-contain transition-all duration-500 ${
           isLoading ? "opacity-0 scale-110" : "opacity-100 scale-100"
-        }`}
+        } hover:scale-105 hover:cursor-pointer`}
         priority
       />
     </div>
   );
 };
 
-export default function ProjectCard({ project, index }: ProjectCardProps) {
+export default function ProjectCard({
+  project,
+  index,
+  onImageClick,
+}: ProjectCardProps) {
   const id = `project-${project.id}`;
 
   useGSAP(() => {
@@ -90,8 +95,10 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         <h3 className="text-xl font-semibold text-white">{project.title}</h3>
       </CardHeader>
       <CardContent className="flex-grow p-4 pt-0">
-        {project.imageUrl && (
-          <ImageWithSkeleton src={project.imageUrl} alt={project.title} />
+        {project.imageUrls && (
+          <div onClick={() => onImageClick(project)}>
+            <ImageWithSkeleton src={project.imageUrls[0]} alt={project.title} />
+          </div>
         )}
         <p className="text-gray-300 text-sm">{project.description}</p>
         {project.technologies && (
