@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-import { gsap } from "gsap";
 import { Card, CardHeader } from "@/components/ui/card";
 import { Job } from "@/types/jobs";
 import TimelineItem from "./TimelineItem";
@@ -9,27 +7,6 @@ const TimelineCard: React.FC<{ item: Job; isLeft: boolean }> = ({
   isLeft,
 }) => {
   const id = `timeline-item-${item.id}`;
-
-  useEffect(() => {
-    gsap.fromTo(
-      `#${id}`,
-      {
-        opacity: 0,
-        y: 100,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.75,
-        delay: 0.25,
-        ease: "power1.inOut",
-        scrollTrigger: {
-          trigger: `#${id}`,
-          start: "20% bottom",
-        },
-      },
-    );
-  }, [id, item.id]);
 
   return (
     <div className="flex flex-col items-center relative">

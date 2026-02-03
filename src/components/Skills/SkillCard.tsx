@@ -2,40 +2,15 @@
 
 import { Card } from "../ui/card";
 import { Skill } from "@/types/skill";
-import { useGSAP } from "@gsap/react";
-import { gsap } from "gsap";
 import svg from "../../../public/expo-icon.svg";
 import Image from "next/image";
 
 interface SkillCardProps {
   skill: Skill;
-  index: number;
 }
 
-export default function SkillCard({ skill, index }: SkillCardProps) {
+export default function SkillCard({ skill }: SkillCardProps) {
   const skillId = `skill-${skill.id}`;
-
-  useGSAP(() => {
-    gsap.fromTo(
-      `#${skillId}`,
-      {
-        opacity: 0,
-        x: 200,
-      },
-      {
-        opacity: 1,
-        x: 0,
-        duration: 0.5 + index * 0.1,
-        delay: 0.5,
-        ease: "power1.inOut",
-        scrollTrigger: {
-          trigger: `#skills`,
-          start: "top 70%",
-          toggleActions: "play none none none",
-        },
-      }
-    );
-  }, [index, skillId]);
 
   const SkillRanking = ({ ranking }: { ranking: Skill["ranking"] }) => {
     const maxRanking = 5;
@@ -69,7 +44,7 @@ export default function SkillCard({ skill, index }: SkillCardProps) {
   return (
     <Card
       id={skillId}
-      className="flex flex-col gap-2 p-3 text-white bg-black/20 border-white/20"
+      className="flex-1 flex flex-col gap-2 p-3 text-white bg-black/20 border-white/20"
     >
       <div className="flex gap-2 w-full">
         <div className="flex h-auto items-center justify-center">

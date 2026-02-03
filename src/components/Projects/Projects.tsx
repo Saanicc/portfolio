@@ -6,6 +6,8 @@ import { Project } from "@/types/project";
 import { X } from "lucide-react";
 import Image from "next/image";
 import { useScreenSize } from "@/hooks/useScreenSize";
+import { motion } from "motion/react";
+import AnimationWrapper from "../AnimationWrapper";
 
 export default function Projects() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -85,12 +87,16 @@ export default function Projects() {
                   new Date(b.createdAt).getTime(),
               )
               .map((project, index) => (
-                <ProjectCard
+                <AnimationWrapper
                   key={project.id}
-                  project={project}
-                  index={index}
-                  onImageClick={handleProjectImageClick}
-                />
+                  delay={0.25 + index * 0.25}
+                  className="flex flex-1"
+                >
+                  <ProjectCard
+                    project={project}
+                    onImageClick={handleProjectImageClick}
+                  />
+                </AnimationWrapper>
               ))}
           </CardContent>
         </Card>

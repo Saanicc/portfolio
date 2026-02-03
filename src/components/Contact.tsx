@@ -16,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import emailjs from "@emailjs/browser";
 import { useToast } from "@/hooks/use-toast";
 import { Card, CardHeader, CardContent } from "./ui/card";
+import AnimationWrapper from "./AnimationWrapper";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
@@ -78,88 +79,90 @@ const Contact: React.FC = () => {
 
   return (
     <section id="contact" className="w-full max-w-2xl mb-20">
-      <Card className="flex flex-col w-full bg-black/30 border-white/20">
-        <CardHeader className="p-4">
-          <h2 className="text-2xl font-bold text-white">Get in touch</h2>
-        </CardHeader>
-        <CardContent className="p-4 pt-0 text-white">
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="w-full space-y-4"
-            >
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-white">Name</FormLabel>
-                    <FormControl>
-                      <Input
-                        className="border-white/30"
-                        placeholder="Your name"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-white">Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        className="border-white/30"
-                        placeholder="your.email@example.com"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="message"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-white">Message</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        {...field}
-                        placeholder="Your message"
-                        className="resize-none min-h-[100px] overflow-hidden h-auto border-white/30"
-                        rows={4}
-                        onInput={(e) => {
-                          const target = e.target as HTMLTextAreaElement;
-                          target.style.height = "auto";
-                          target.style.height = `${target.scrollHeight}px`;
-                        }}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <Button
-                type="submit"
-                variant="outline"
-                className="w-full bg-transparent hover:text-white"
-                disabled={isSubmitting}
+      <AnimationWrapper>
+        <Card className="flex flex-col w-full bg-black/30 border-white/20">
+          <CardHeader className="p-4">
+            <h2 className="text-2xl font-bold text-white">Get in touch</h2>
+          </CardHeader>
+          <CardContent className="p-4 pt-0 text-white">
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="w-full space-y-4"
               >
-                {isSubmitting ? "Sending..." : "Send Message"}
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-white">Name</FormLabel>
+                      <FormControl>
+                        <Input
+                          className="border-white/30"
+                          placeholder="Your name"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-white">Email</FormLabel>
+                      <FormControl>
+                        <Input
+                          className="border-white/30"
+                          placeholder="your.email@example.com"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="message"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-white">Message</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          {...field}
+                          placeholder="Your message"
+                          className="resize-none min-h-[100px] overflow-hidden h-auto border-white/30"
+                          rows={4}
+                          onInput={(e) => {
+                            const target = e.target as HTMLTextAreaElement;
+                            target.style.height = "auto";
+                            target.style.height = `${target.scrollHeight}px`;
+                          }}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Button
+                  type="submit"
+                  variant="outline"
+                  className="w-full bg-transparent hover:text-white"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Sending..." : "Send Message"}
+                </Button>
+              </form>
+            </Form>
+          </CardContent>
+        </Card>
+      </AnimationWrapper>
     </section>
   );
 };
