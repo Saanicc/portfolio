@@ -32,7 +32,7 @@ export default function Home() {
           end: "90% bottom",
           toggleActions: "play none none none",
         },
-      }
+      },
     );
 
     gsap.fromTo(
@@ -49,7 +49,7 @@ export default function Home() {
           end: "90% bottom",
           toggleActions: "play none none none",
         },
-      }
+      },
     );
 
     gsap.fromTo(
@@ -65,7 +65,7 @@ export default function Home() {
           start: "top 90%",
           toggleActions: "play none none none",
         },
-      }
+      },
     );
 
     gsap.fromTo(
@@ -80,7 +80,7 @@ export default function Home() {
           end: "90% bottom",
           toggleActions: "play none none none",
         },
-      }
+      },
     );
 
     gsap.fromTo(
@@ -97,7 +97,7 @@ export default function Home() {
           trigger: "#contact",
           start: "40% bottom",
         },
-      }
+      },
     );
   }, []);
 

@@ -26,7 +26,7 @@ const formSchema = z.object({
       (email) => !email.endsWith("@qq.com") && !email.endsWith("@163.com"),
       {
         message: "Emails from qq.com and 163.com are not allowed.",
-      }
+      },
     ),
   message: z.string().min(10, "Message must be at least 10 characters."),
 });
@@ -57,7 +57,7 @@ const Contact: React.FC = () => {
         },
         {
           publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "",
-        }
+        },
       );
 
       toast({
@@ -78,7 +78,7 @@ const Contact: React.FC = () => {
 
   return (
     <section id="contact" className="w-full max-w-2xl mb-20">
-      <Card className="flex flex-col w-full bg-black/20 border-white/20">
+      <Card className="flex flex-col w-full bg-black/30 border-white/20">
         <CardHeader className="p-4">
           <h2 className="text-2xl font-bold text-white">Get in touch</h2>
         </CardHeader>

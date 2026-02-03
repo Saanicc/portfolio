@@ -18,7 +18,7 @@ export default function Skills() {
 
   return (
     <section id="skills" className="w-full min-h-full">
-      <Card className="h-full flex flex-col bg-black/20 border-white/20">
+      <Card className="h-full flex flex-col bg-black/30 border-white/20">
         <CardHeader className="p-4">
           <h2 className="text-2xl font-bold text-white">Skills</h2>
         </CardHeader>

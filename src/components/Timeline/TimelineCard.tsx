@@ -27,7 +27,7 @@ const TimelineCard: React.FC<{ item: Job; isLeft: boolean }> = ({
           trigger: `#${id}`,
           start: "20% bottom",
         },
-      }
+      },
     );
   }, [id, item.id]);
 
@@ -41,7 +41,7 @@ const TimelineCard: React.FC<{ item: Job; isLeft: boolean }> = ({
       >
         <Card
           id={id}
-          className="flex flex-col w-full bg-transparent border-white/20"
+          className="flex flex-col w-full bg-black/30 border-white/20"
         >
           <CardHeader className="p-4">
             <h3 className="text-xl font-semibold text-white">{item.title}</h3>

@@ -82,14 +82,14 @@ export default function ProjectCard({
           end: "90% bottom",
           toggleActions: "play none none none",
         },
-      }
+      },
     );
   }, []);
 
   return (
     <Card
       id={id}
-      className="flex-1 min-w-[260px] bg-transparent border-white/20 flex flex-col"
+      className="flex-1 min-w-[260px] bg-black/30 border-white/20 flex flex-col"
     >
       <CardHeader className="p-4">
         <h3 className="text-xl font-semibold text-white">{project.title}</h3>

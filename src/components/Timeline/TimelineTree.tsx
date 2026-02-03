@@ -22,7 +22,7 @@ const TimelineTree = () => {
 
   return (
     <section id="work" className="min-w-full min-h-96">
-      <Card className="w-full flex flex-col bg-black/20 border-white/20 relative">
+      <Card className="w-full flex flex-col bg-black/30 border-white/20 relative">
         <div className="absolute left-1/2 transform -translate-x-1/2 w-[1px] bottom-0 h-full bg-[#ffffff50] hidden md:block"></div>
         <CardHeader className="p-4">
           <h2 className="text-2xl font-bold text-white">Work experience</h2>
