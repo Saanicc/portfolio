@@ -10,7 +10,7 @@ import { useScreenSize } from "@/hooks/useScreenSize";
 export default function Projects() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [selectedProject, setSelectedProject] = useState<Project | undefined>(
-    undefined
+    undefined,
   );
   const [showImageModal, setShowImageModal] = useState(false);
 
@@ -37,11 +37,11 @@ export default function Projects() {
         onClick={() => setShowImageModal(false)}
       >
         <Card
-          className="z-[51] bg-black border-white/20 w-full h-auto overflow-auto max-h-screen md:w-auto xl:h-auto"
+          className="z-[51] bg-black border-white/20 w-full max-h-[90vh] overflow-hidden md:w-auto flex flex-col"
           onClick={(e) => e.stopPropagation()}
         >
-          <CardHeader className="flex flex-row gap-4 justify-between items-center">
-            <h1 className="text-2xl font-bold text-white">
+          <CardHeader className="flex flex-row gap-4 justify-between items-center border-b border-white/20 bg-black p-4">
+            <h1 className="text-xl font-bold text-white">
               {selectedProject?.title}
             </h1>
             <X
@@ -49,7 +49,7 @@ export default function Projects() {
               onClick={() => setShowImageModal(false)}
             />
           </CardHeader>
-          <CardContent className="flex flex-col gap-4 justify-center items-center h-auto">
+          <CardContent className="flex-1 flex flex-col gap-4 items-center overflow-y-auto p-4">
             {selectedProject?.imageUrls?.map((image, index) => (
               <Image
                 key={index}
@@ -82,7 +82,7 @@ export default function Projects() {
               .sort(
                 (a, b) =>
                   new Date(a.createdAt).getTime() -
-                  new Date(b.createdAt).getTime()
+                  new Date(b.createdAt).getTime(),
               )
               .map((project, index) => (
                 <ProjectCard
