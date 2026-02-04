@@ -1,13 +1,9 @@
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import { Job } from "@/types/jobs";
 import TimelineCard from "./TimelineCard";
 import { useEffect, useState } from "react";
 import { getJobs } from "@/lib/firebase/jobs";
 import AnimationWrapper from "../AnimationWrapper";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const TimelineTree = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
