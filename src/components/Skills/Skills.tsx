@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader } from "../ui/card";
 import { getSkills } from "@/lib/firebase/skills";
 import { Skill } from "@/types/skill";
 import { useEffect, useState } from "react";
+import AnimationWrapper from "../AnimationWrapper";
 
 export default function Skills() {
   const [skills, setSkills] = useState<Skill[]>([]);
@@ -24,7 +25,9 @@ export default function Skills() {
         </CardHeader>
         <CardContent className="flex flex-wrap gap-2 p-4 pt-0">
           {skills.map((skill, index) => (
-            <SkillCard key={skill.id} skill={skill} index={index} />
+            <AnimationWrapper key={skill.id} index={index} delay={0.1}>
+              <SkillCard skill={skill} />
+            </AnimationWrapper>
           ))}
         </CardContent>
       </Card>

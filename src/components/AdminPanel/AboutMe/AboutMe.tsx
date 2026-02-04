@@ -23,20 +23,7 @@ import { z } from "zod";
 
 const AboutMe = () => {
   const [loading, setLoading] = useState(false);
-  const [about, setAbout] = useState<AboutMe>({} as AboutMe);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getAboutMe();
-      if (data && data.length > 0) {
-        setAbout(data[0]);
-        form.reset({
-          description: data[0].description || "",
-        });
-      }
-    };
-    fetchData();
-  }, []);
+  const [about, setAbout] = useState<AboutMe>();
 
   const formSchema = z.object({
     description: z
@@ -47,18 +34,41 @@ const AboutMe = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      description: about ? about.description : "",
+      description: "Loading...",
     },
   });
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getAboutMe();
+      if (data && data.length > 0) {
+        setAbout(data[0]);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (about) {
+      form.reset({
+        description: about.description,
+      });
+    }
+  }, [about, form]);
+
   const onSubmit = async (formData: z.infer<typeof formSchema>) => {
+    if (!about) {
+      alert("No about me data found. Please try again.");
+      return;
+    }
+
     setLoading(true);
 
     try {
       await updateAboutMe(about.id, formData);
       alert("Successfully updated 'about me'!");
     } catch (error) {
-      alert("Error adding project. Check console for details.");
+      alert("Error updating 'about me'. Check console for details.");
       console.error("Error: ", error);
     } finally {
       setLoading(false);

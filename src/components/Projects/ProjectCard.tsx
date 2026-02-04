@@ -6,15 +6,12 @@ import {
 } from "@/components/ui/card";
 import { Project } from "@/types/project";
 import Link from "next/link";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
 import Image from "next/image";
 import { ExternalLink } from "lucide-react";
 import { useState } from "react";
 
 interface ProjectCardProps {
   project: Project;
-  index: number;
   onImageClick: (project: Project) => void;
 }
 
@@ -58,33 +55,9 @@ const ImageWithSkeleton = ({ src, alt }: { src: string; alt: string }) => {
 
 export default function ProjectCard({
   project,
-  index,
   onImageClick,
 }: ProjectCardProps) {
   const id = `project-${project.id}`;
-
-  useGSAP(() => {
-    gsap.fromTo(
-      `#${id}`,
-      {
-        opacity: 0,
-        y: 100,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.5,
-        delay: 0.25 + index * 0.25,
-        ease: "power1.inOut",
-        scrollTrigger: {
-          trigger: `#${id}`,
-          start: "top 80%",
-          end: "90% bottom",
-          toggleActions: "play none none none",
-        },
-      },
-    );
-  }, []);
 
   return (
     <Card
