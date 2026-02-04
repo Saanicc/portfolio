@@ -35,11 +35,7 @@ const TimelineTree = () => {
                   viewportAmount={0.2}
                   delay={0.25}
                 >
-                  <TimelineCard
-                    key={item.id}
-                    item={item}
-                    isLeft={index % 2 === 0}
-                  />
+                  <TimelineCard item={item} isLeft={index % 2 === 0} />
                 </AnimationWrapper>
               ))}
             </div>

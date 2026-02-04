@@ -26,7 +26,7 @@ export default function Skills() {
         <CardContent className="flex flex-wrap gap-2 p-4 pt-0">
           {skills.map((skill, index) => (
             <AnimationWrapper key={skill.id} index={index} delay={0.1}>
-              <SkillCard key={skill.id} skill={skill} />
+              <SkillCard skill={skill} />
             </AnimationWrapper>
           ))}
         </CardContent>
