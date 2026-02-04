@@ -10,6 +10,7 @@ import { Toaster } from "@/components/ui/toaster";
 import TimelineTree from "@/components/Timeline/TimelineTree";
 import Footer from "@/components/Footer";
 import { BackgroundGradient } from "@/components/BackgroundGradient";
+import AnimationWrapper from "@/components/AnimationWrapper";
 
 export default function Home() {
   return (
@@ -21,10 +22,16 @@ export default function Home() {
           <Hero />
           <section
             id="about"
-            className="flex flex-col sm:flex-row w-full min-w-full md:px-0 gap-4 h-auto min-h-96"
+            className="w-full min-w-full md:px-0 h-auto min-h-96"
           >
-            <About />
-            <Skills />
+            <AnimationWrapper
+              transitionDuration={0.5}
+              viewportAmount={0.1}
+              className="flex flex-col sm:flex-row gap-4"
+            >
+              <About />
+              <Skills />
+            </AnimationWrapper>
           </section>
           <TimelineTree />
           <Projects />
