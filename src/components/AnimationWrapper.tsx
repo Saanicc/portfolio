@@ -1,5 +1,5 @@
 import React from "react";
-import { HTMLMotionProps, motion } from "motion/react";
+import { motion } from "motion/react";
 
 const AnimationWrapper = ({
   children,

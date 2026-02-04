@@ -6,7 +6,6 @@ import { Project } from "@/types/project";
 import { X } from "lucide-react";
 import Image from "next/image";
 import { useScreenSize } from "@/hooks/useScreenSize";
-import { motion } from "motion/react";
 import AnimationWrapper from "../AnimationWrapper";
 
 export default function Projects() {

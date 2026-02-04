@@ -25,19 +25,6 @@ const AboutMe = () => {
   const [loading, setLoading] = useState(false);
   const [about, setAbout] = useState<AboutMe>({} as AboutMe);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getAboutMe();
-      if (data && data.length > 0) {
-        setAbout(data[0]);
-        form.reset({
-          description: data[0].description || "",
-        });
-      }
-    };
-    fetchData();
-  }, []);
-
   const formSchema = z.object({
     description: z
       .string()
@@ -50,6 +37,19 @@ const AboutMe = () => {
       description: about ? about.description : "",
     },
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getAboutMe();
+      if (data && data.length > 0) {
+        setAbout(data[0]);
+        form.reset({
+          description: data[0].description || "",
+        });
+      }
+    };
+    fetchData();
+  }, [form]);
 
   const onSubmit = async (formData: z.infer<typeof formSchema>) => {
     setLoading(true);

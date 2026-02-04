@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader } from "./ui/card";
 import { getAboutMe } from "@/lib/firebase/about";
 import { useEffect, useState } from "react";
 import { AboutMe } from "@/types/about";
-import AnimationWrapper from "./AnimationWrapper";
 
 const About = () => {
   const [about, setAbout] = useState<AboutMe>();
