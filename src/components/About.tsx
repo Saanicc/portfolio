@@ -22,6 +22,7 @@ const About = () => {
         transitionDuration={0.5}
         delay={0.25}
         viewportAmount={0.5}
+        className="h-full"
       >
         <Card className="flex flex-col bg-black/30 border-white/20 h-full">
           <CardHeader className="p-4">

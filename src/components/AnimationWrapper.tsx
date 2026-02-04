@@ -39,7 +39,7 @@ const AnimationWrapper = ({
                   : 0,
       }}
       viewport={{
-        margin: viewportMargin ? viewportMargin : "150px",
+        margin: viewportMargin ? viewportMargin : "-100px",
         amount: viewportAmount ? viewportAmount : 0.3,
         once: true,
       }}

@@ -23,11 +23,7 @@ const TimelineTree = () => {
 
   return (
     <section id="work" className="min-w-full min-h-96">
-      <AnimationWrapper
-        transitionDuration={0.5}
-        viewportMargin="-100px"
-        viewportAmount={0.1}
-      >
+      <AnimationWrapper transitionDuration={0.5} viewportAmount={0.1}>
         <Card className="w-full flex flex-col bg-black/30 border-white/20 relative">
           <div className="absolute left-1/2 transform -translate-x-1/2 w-[1px] bottom-0 h-full bg-[#ffffff50] hidden md:block"></div>
           <CardHeader className="p-4">
@@ -40,8 +36,8 @@ const TimelineTree = () => {
                   key={item.id}
                   index={index}
                   transitionDuration={0.5}
-                  viewportMargin="-100px"
-                  viewportAmount={0.1}
+                  viewportAmount={0.2}
+                  delay={0.25}
                 >
                   <TimelineCard
                     key={item.id}
