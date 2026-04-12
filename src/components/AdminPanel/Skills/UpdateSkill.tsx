@@ -17,12 +17,10 @@ import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Skill } from "@/types/skill";
-import { Slider } from "@/components/ui/slider";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters."),
   icon: z.string().min(2, "Icon must be at least 2 characters."),
-  ranking: z.number(),
 });
 export const UpdateSkill = ({
   defaultData,
@@ -38,7 +36,6 @@ export const UpdateSkill = ({
     defaultValues: {
       name: defaultData ? defaultData.name : "",
       icon: defaultData ? defaultData.icon : "",
-      ranking: defaultData ? defaultData.ranking : 0,
     },
   });
 
@@ -102,7 +99,6 @@ export const UpdateSkill = ({
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="icon"
@@ -120,47 +116,6 @@ export const UpdateSkill = ({
                 </FormItem>
               )}
             />
-
-            <FormField
-              control={form.control}
-              name="ranking"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel htmlFor="ranking" className="text-white">
-                    Skill ranking
-                  </FormLabel>
-                  <FormControl>
-                    <div>
-                      <Input
-                        {...field}
-                        id="ranking"
-                        className="border-white/30"
-                        placeholder="Project GitHub URL"
-                        disabled
-                        value={rankingLabels[field.value]}
-                      />
-                      <div className="pt-4 pb-2">
-                        <Slider
-                          id="ranking"
-                          defaultValue={[defaultData ? defaultData.ranking : 0]}
-                          max={4}
-                          step={1}
-                          onChange={(e) => {
-                            form.setValue(
-                              "ranking",
-                              Number((e.target as HTMLInputElement).value)
-                            );
-                            form.trigger("ranking");
-                          }}
-                        />
-                      </div>
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
             <Button
               type="submit"
               variant="secondary"
@@ -170,10 +125,10 @@ export const UpdateSkill = ({
               {loading && !defaultData
                 ? "Adding..."
                 : loading && defaultData
-                ? "Updating..."
-                : defaultData
-                ? "Update skill"
-                : "Add skill"}
+                  ? "Updating..."
+                  : defaultData
+                    ? "Update skill"
+                    : "Add skill"}
             </Button>
             <Button
               type="button"
