@@ -58,14 +58,6 @@ export const UpdateSkill = ({
     }
   };
 
-  const rankingLabels = [
-    "Learning",
-    "Familiar",
-    "Comfortable",
-    "Proficient",
-    "Experienced",
-  ];
-
   return (
     <Card className="mx-4 w-full md:w-96 h-auto max-h-[90%] overflow-auto bg-black border border-white/20">
       <CardHeader>
