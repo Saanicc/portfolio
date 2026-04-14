@@ -7,7 +7,6 @@ import { signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase/init";
 import { useAuth } from "@/components/AdminPanel/Login/useAuth";
 import LoginForm from "@/components/AdminPanel/Login/LoginForm";
-import { ToastProvider } from "@/components/ui/toast";
 
 const AdminPage = () => {
   const { user, loading } = useAuth();
