@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { addProject, updateProject } from "@/lib/firebase/projects";
 import { Card, CardContent, CardHeader } from "../../ui/card";
 import { useForm } from "react-hook-form";
@@ -58,12 +58,15 @@ export const UpdateProject = ({
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [images, setImages] = useState<ImageItem[]>(() => {
-    return (defaultData?.imageUrls ?? []).map((url) => ({
+  const [images, setImages] = useState<ImageItem[]>(
+    defaultData?.imageUrls?.map((url) => ({
       type: "existing",
       url,
-    }));
-  });
+    })) ?? [],
+  );
+  const [existingImagesToRemove, setExistingImagesToRemove] = useState<
+    string[]
+  >([]);
   const [uploadProgress, setUploadProgress] = useState<string>("");
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -76,6 +79,20 @@ export const UpdateProject = ({
       githubUrl: defaultData?.githubUrl ?? "",
     },
   });
+
+  const revokeImageUrls = () => {
+    images.forEach((image) => {
+      if (image.type === "new") {
+        URL.revokeObjectURL(image.previewUrl);
+      }
+    });
+  };
+
+  useEffect(() => {
+    return () => {
+      revokeImageUrls();
+    };
+  }, []);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
@@ -181,34 +198,13 @@ export const UpdateProject = ({
 
   const handleRemoveImage = async (item: ImageItem, index: number) => {
     if (item.type === "existing") {
-      try {
-        const storageRef = ref(storage, item.url);
-        await deleteObject(storageRef);
+      setExistingImagesToRemove((prev) => [...prev, item.url]);
 
-        if (defaultData) {
-          const remainingUrls = images
-            .filter((_, i) => i !== index)
-            .filter((img) => img.type === "existing")
-            .map((img) => img.url as string);
-
-          await updateProject(defaultData.id, { imageUrls: remainingUrls });
-        }
-
-        toast({
-          duration: 3000,
-          title: "Image removed",
-          description: "Existing image removed from project successfully.",
-        });
-      } catch (error) {
-        console.error("Error removing image:", error);
-        toast({
-          duration: 3000,
-          title: "Error",
-          description: "Failed to remove image from storage.",
-          variant: "destructive",
-        });
-        return;
-      }
+      toast({
+        duration: 3000,
+        title: "Image set to be removed",
+        description: "The image will be removed from the project upon save.",
+      });
     } else {
       URL.revokeObjectURL(item.previewUrl);
       toast({
@@ -223,37 +219,23 @@ export const UpdateProject = ({
   };
 
   const handleRemoveAll = async () => {
-    let successCount = 0;
-
     for (const item of images) {
       if (item.type === "existing") {
-        try {
-          const storageRef = ref(storage, item.url);
-          await deleteObject(storageRef);
-          successCount++;
-        } catch (error) {
-          console.error("Failed to delete existing image in bulk:", error);
-        }
+        setExistingImagesToRemove((prev) => {
+          if (prev.includes(item.url)) return prev;
+          return [...prev, item.url];
+        });
       } else {
         URL.revokeObjectURL(item.previewUrl);
-        successCount++;
-      }
-    }
-
-    if (defaultData) {
-      try {
-        await updateProject(defaultData.id, { imageUrls: [] });
-      } catch (e) {
-        console.error("Failed to clear images in project data:", e);
       }
     }
 
     setImages([]);
     toast({
       duration: 3000,
-      title: "All images removed",
-      description: `Removed ${successCount} out of ${images.length} images.`,
-      variant: successCount < images.length ? "destructive" : "default",
+      title: "All images set to be removed",
+      description: `All images will be removed from project upon save.`,
+      variant: "default",
     });
 
     if (fileInputRef.current) fileInputRef.current.value = "";
@@ -282,17 +264,18 @@ export const UpdateProject = ({
         )
         .map((img) => img.file);
 
-      const existingUrls = images
+      const existingUrlsToKeep = images
         .filter(
           (img): img is Extract<ImageItem, { type: "existing" }> =>
             img.type === "existing",
         )
+        .filter((img) => !existingImagesToRemove.includes(img.url))
         .map((img) => img.url);
 
       const uploadedUrls =
         newFiles.length > 0 ? await uploadImages(newFiles, formData.title) : [];
 
-      const combinedUrls = [...existingUrls, ...uploadedUrls];
+      const combinedUrls = [...existingUrlsToKeep, ...uploadedUrls];
       const projectData = {
         ...formData,
         imageUrls: combinedUrls,
@@ -306,6 +289,21 @@ export const UpdateProject = ({
           description: "Project added successfully.",
         });
       } else {
+        try {
+          for (const url of existingImagesToRemove) {
+            const storageRef = ref(storage, url);
+            await deleteObject(storageRef);
+          }
+        } catch (error) {
+          toast({
+            duration: 3000,
+            title: "Error",
+            description: "Error deleting images. Check console for details.",
+            variant: "destructive",
+          });
+          console.error("Error deleting images: ", error);
+        }
+
         await updateProject(defaultData.id, projectData);
         toast({
           duration: 3000,
@@ -315,6 +313,7 @@ export const UpdateProject = ({
       }
 
       form.reset();
+      revokeImageUrls();
       setImages([]);
       setUploadProgress("");
 
