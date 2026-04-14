@@ -44,20 +44,22 @@ type ImageItem =
   | { type: "existing"; url: string }
   | { type: "new"; file: File; id: string; previewUrl: string };
 
+type UpdateProjectProps = {
+  defaultData?: Project;
+  closeModal: () => void;
+};
+
 export const UpdateProject = ({
   defaultData,
   closeModal,
-}: {
-  defaultData?: Project;
-  closeModal: () => void;
-}) => {
+}: UpdateProjectProps) => {
   const [techInput, setTechInput] = useState("");
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [images, setImages] = useState<ImageItem[]>(() => {
-    return (defaultData?.imageUrls || []).map((url) => ({
+    return (defaultData?.imageUrls ?? []).map((url) => ({
       type: "existing",
       url,
     }));
@@ -67,20 +69,18 @@ export const UpdateProject = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: defaultData ? defaultData.title : "",
-      description: defaultData ? defaultData.description : "",
-      technologies: defaultData ? defaultData.technologies : [],
-      liveUrl: defaultData ? defaultData.liveUrl : "",
-      githubUrl: defaultData ? defaultData.githubUrl : "",
+      title: defaultData?.title ?? "",
+      description: defaultData?.description ?? "",
+      technologies: defaultData?.technologies ?? [],
+      liveUrl: defaultData?.liveUrl ?? "",
+      githubUrl: defaultData?.githubUrl ?? "",
     },
   });
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
 
-    if (!files || files.length === 0) {
-      return;
-    }
+    if (!files || files.length === 0) return;
 
     const newImages: ImageItem[] = [];
     let hasError = false;
@@ -97,7 +97,8 @@ export const UpdateProject = ({
         continue;
       }
 
-      if (file.size > 5 * 1024 * 1024) {
+      const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+      if (file.size > MAX_FILE_SIZE) {
         toast({
           duration: 3000,
           title: "File too large",
@@ -141,27 +142,20 @@ export const UpdateProject = ({
     setUploadProgress("Uploading images...");
 
     const uploadPromises = files.map(async (file, index) => {
-      const fileName = `projects/${sanitizedTitle}-${timestamp}-${index}.${file.name
-        .split(".")
-        .pop()}`;
-
-      console.log("File name: ", fileName);
-
+      const fileExtension = file.name.split(".").pop();
+      const fileName = `projects/${sanitizedTitle}-${timestamp}-${index}.${fileExtension}`;
       const storageRef = ref(storage, fileName);
-
-      console.log("Storage ref: ", storageRef);
 
       try {
         const snapshot = await uploadBytes(storageRef, file);
-
-        console.log("Snapshot: ", snapshot);
-
         const downloadUrl = await getDownloadURL(snapshot.ref);
+
         toast({
           duration: 3000,
           title: "Upload complete",
           description: `Successfully uploaded ${file.name}.`,
         });
+
         return downloadUrl;
       } catch (error) {
         toast({
@@ -176,12 +170,11 @@ export const UpdateProject = ({
 
     try {
       const downloadURLs = await Promise.all(uploadPromises);
-      console.log("Download URLs: ", downloadURLs);
       setUploadProgress("");
       return downloadURLs;
     } catch (error) {
       setUploadProgress("");
-      console.error(error);
+      console.error("Failed to upload images:", error);
       throw new Error("Failed to upload images");
     }
   };
@@ -189,12 +182,8 @@ export const UpdateProject = ({
   const handleRemoveImage = async (item: ImageItem, index: number) => {
     if (item.type === "existing") {
       try {
-        // const storageRef = ref(storage, item.url);
-        // await deleteObject(storageRef);
-
-        console.log("Item: ", item);
-
-        console.log("Images: ", images);
+        const storageRef = ref(storage, item.url);
+        await deleteObject(storageRef);
 
         if (defaultData) {
           const remainingUrls = images
@@ -202,9 +191,7 @@ export const UpdateProject = ({
             .filter((img) => img.type === "existing")
             .map((img) => img.url as string);
 
-          console.log("Remaining URLs: ", remainingUrls);
-
-          // await updateProject(defaultData.id, { imageUrls: remainingUrls });
+          await updateProject(defaultData.id, { imageUrls: remainingUrls });
         }
 
         toast({
@@ -257,7 +244,7 @@ export const UpdateProject = ({
       try {
         await updateProject(defaultData.id, { imageUrls: [] });
       } catch (e) {
-        console.error(e);
+        console.error("Failed to clear images in project data:", e);
       }
     }
 
@@ -306,22 +293,20 @@ export const UpdateProject = ({
         newFiles.length > 0 ? await uploadImages(newFiles, formData.title) : [];
 
       const combinedUrls = [...existingUrls, ...uploadedUrls];
+      const projectData = {
+        ...formData,
+        imageUrls: combinedUrls,
+      };
 
       if (!defaultData) {
-        await addProject({
-          ...formData,
-          imageUrls: combinedUrls,
-        });
+        await addProject(projectData);
         toast({
           duration: 3000,
           title: "Success",
           description: "Project added successfully.",
         });
       } else {
-        await updateProject(defaultData.id, {
-          ...formData,
-          imageUrls: combinedUrls,
-        });
+        await updateProject(defaultData.id, projectData);
         toast({
           duration: 3000,
           title: "Success",
@@ -342,38 +327,46 @@ export const UpdateProject = ({
         description: "Error saving project. Check console for details.",
         variant: "destructive",
       });
-      console.error("Error: ", error);
+      console.error("Error saving project: ", error);
     } finally {
       setLoading(false);
     }
   };
 
   const addTechnology = () => {
-    if (
-      techInput.trim() &&
-      !form.getValues("technologies").includes(techInput.trim())
-    ) {
-      const currentTechs = form.getValues("technologies");
-      form.setValue("technologies", [...currentTechs, techInput.trim()]);
+    const trimmedInput = techInput.trim();
+    const currentTechs = form.getValues("technologies");
+
+    if (trimmedInput && !currentTechs.includes(trimmedInput)) {
+      form.setValue("technologies", [...currentTechs, trimmedInput]);
       form.trigger("technologies");
       setTechInput("");
     }
   };
 
-  const removeTechnology = (tech: string) => {
+  const removeTechnology = (techToRemove: string) => {
     const currentTechs = form.getValues("technologies");
     form.setValue(
       "technologies",
-      currentTechs.filter((t) => t !== tech),
+      currentTechs.filter((tech) => tech !== techToRemove),
     );
     form.trigger("technologies");
   };
+
+  const isUpdating = !!defaultData;
+  const buttonText = loading
+    ? isUpdating
+      ? "Updating..."
+      : "Adding..."
+    : isUpdating
+      ? "Update project"
+      : "Add project";
 
   return (
     <Card className="mx-4 w-full md:max-w-[80%] xl:max-w-[60%] h-auto max-h-[90%] overflow-auto bg-black mt-10 mb-10 border border-white/20">
       <CardHeader>
         <h2 className="text-2xl font-bold text-white">
-          {defaultData ? "Update project" : "Add New Project"}
+          {isUpdating ? "Update project" : "Add New Project"}
         </h2>
       </CardHeader>
       <CardContent className="text-white">
@@ -589,13 +582,7 @@ export const UpdateProject = ({
               className="w-full"
               disabled={loading}
             >
-              {loading && !defaultData
-                ? "Adding..."
-                : loading && defaultData
-                  ? "Updating..."
-                  : defaultData
-                    ? "Update project"
-                    : "Add project"}
+              {buttonText}
             </Button>
             <Button
               type="button"
