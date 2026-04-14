@@ -289,22 +289,25 @@ export const UpdateProject = ({
           description: "Project added successfully.",
         });
       } else {
-        try {
-          for (const url of existingImagesToRemove) {
-            const storageRef = ref(storage, url);
-            await deleteObject(storageRef);
-          }
-        } catch (error) {
+        await updateProject(defaultData.id, projectData);
+
+        const deletionResults = await Promise.allSettled(
+          existingImagesToRemove.map((url) => deleteObject(ref(storage, url))),
+        );
+        const failedDeletions = deletionResults.filter(
+          (result) => result.status === "rejected",
+        );
+        if (failedDeletions.length > 0) {
           toast({
             duration: 3000,
-            title: "Error",
-            description: "Error deleting images. Check console for details.",
+            title: "Partial cleanup",
+            description:
+              "Project updated, but some old images could not be deleted.",
             variant: "destructive",
           });
-          console.error("Error deleting images: ", error);
+          console.error("Error deleting some images:", failedDeletions);
         }
 
-        await updateProject(defaultData.id, projectData);
         toast({
           duration: 3000,
           title: "Success",

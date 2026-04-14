@@ -39,9 +39,7 @@ const AdminPage = () => {
   }
 
   return isAuthenticated ? (
-    <ToastProvider>
-      <AdminPanel onLogout={handleLogout} />
-    </ToastProvider>
+    <AdminPanel onLogout={handleLogout} />
   ) : (
     <LoginForm onLogin={handleLogin} />
   );
